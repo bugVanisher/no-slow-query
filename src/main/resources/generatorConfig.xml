@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--注释字段参考文档http://mbg.cndocs.ml/configreference/xmlconfig.html-->
+    <!-- generatorConfiguration元素的子元素下面三个，顺序不能颠倒
+        <properties> (0个或1个)
+        <classPathEntry> (0个或多个)
+        <context> (1个或多个)-->
+
+    <!--
+        context:生成一组对象的环境
+        id:必选，上下文id，用于在生成错误时提示
+        defaultModelType:指定生成对象的样式
+            1. conditional：类似hierarchical；
+            2. flat：所有内容（主键，blob）等全部生成在一个对象中；
+            3. hierarchical：主键生成一个XXKey对象(key class)，Blob等单独生成一个对象，其他简单属性在一个对象中(record class)
+        targetRuntime:
+            1. MyBatis3：默认的值，生成基于MyBatis3.x以上版本的内容，包括XXXBySample；
+            2. MyBatis3Simple：类似MyBatis3，只是不生成XXXBySample；
+        introspectedColumnImpl：类全限定名，用于扩展MBG
+    -->
+    <!-- 1、引入配置文件 -->
+    <!-- 可以用于加载配置项或者配置文件，在整个配置文件中就可以使用${propertyKey}的方式来引用配置项
+    resource：配置资源加载地址，使用resource，MBG从classpath开始找，比如com/myproject/generatorConfig.properties
+    url：配置资源加载地质，使用URL的方式，比如file:///C:/myfolder/generatorConfig.properties.
+    注意，两个属性只能选址一个;
+
+    另外，如果使用了mybatis-generator-maven-plugin，那么在pom.xml中定义的properties都可以直接在generatorConfig.xml中使用
+    <properties resource="" url="" /> -->
+
+
+    <context id="MybatisAutoGenerate" targetRuntime="MyBatis3Simple">
+
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="utf8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!--2、插件配置-->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+        <!-- 配置内置对象序列号接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+        <!--配置内置对象tostring方法生成-->
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+
+        <!--3、注释产生配置，为true则不会生成注释-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="false" /> <!--是否取消注释-->
+            <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
+        </commentGenerator>
+
+        <!--4、数据库连接信息-->
+        <!--直连数据库： 数据库连接信息，如果你已知数据库密码, 可采用下面密码方式. -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/mbappe?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="gannicus" password="123456" />
+
+        <!--5、java类型配置-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" /><!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+        </javaTypeResolver>
+
+        <!-- 6、生成model对象路径配置
+             注意这里请修改成你自己的包路径  -->
+        <javaModelGenerator targetPackage="com.mbappe.newsql.${module}.persistence.ddl" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--  7、SQL目录文件路径配置
+              注意这里请修改成你自己的包路径  -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+        <!--  8、DAO类文件路径配置
+              注意这里请修改成你自己的包路径  -->
+        <!-- 对于mybatis来说，即生成Mapper接口，注意，如果没有配置该元素，那么默认不会生成Mapper接口
+        targetPackage/targetProject:同javaModelGenerator
+        type：选择怎么生成mapper接口（在MyBatis3/MyBatis3Simple下）：
+            1，ANNOTATEDMAPPER：会生成使用Mapper接口+Annotation的方式创建（SQL生成在annotation中），不会生成对应的XML；
+            2，MIXEDMAPPER：使用混合配置，会生成Mapper接口，并适当添加合适的Annotation，但是XML会生成在XML中；
+            3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
+        注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
+         -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mbappe.newsql.${module}.persistence.ddl" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+        </javaClientGenerator>
+
+        <!-- 9、自动生成表信息配置
+             下面添加每一个你想要生成的表名, 成为一个table元素  -->
+
+        <!--不产生Example相关操作的方法-->
+        <!--可选参数：
+            1. schema：数据库的schema；
+            2. catalog：数据库的catalog；
+            3. alias：为数据表设置的别名，如果设置了alias，那么生成的所有的SELECT SQL语句中，列名会变成：alias_actualColumnName
+            4. domainObjectName：生成的domain类的名字，如果不设置，直接使用表名作为domain类的名字；可以设置为somepck.domainName，那么会自动把domainName类再放到somepck包里面；
+            5. enableInsert（默认true）：指定是否生成insert语句；
+            6. enableSelectByPrimaryKey（默认true）：指定是否生成按照主键查询对象的语句（就是getById或get）；
+            7. enableSelectByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询语句；
+            8. enableUpdateByPrimaryKey（默认true）：指定是否生成按照主键修改对象的语句（即update)；
+            9. enableDeleteByPrimaryKey（默认true）：指定是否生成按照主键删除对象的语句（即delete）；
+            10. enableDeleteByExample（默认true）：MyBatis3Simple为false，指定是否生成动态删除语句；
+            11. enableCountByExample（默认true）：MyBatis3Simple为false，指定是否生成动态查询总条数语句（用于分页的总条数查询）；
+            12. enableUpdateByExample（默认true）：MyBatis3Simple为false，指定是否生成动态修改语句（只修改对象中不为空的属性）；
+            13. modelType：参考context元素的defaultModelType，相当于覆盖；
+            14. delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
+            15. delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
+        -->
+        <table tableName="db_info" domainObjectName="DbInfoDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
+            <!-- generatedKey用于生成生成主键的方法，
+            如果设置了该元素，MBG会在生成的<insert>元素中生成一条正确的<selectKey>元素，该元素可选
+            column:主键的列名；
+            sqlStatement：要生成的selectKey语句，有以下可选项：
+                Cloudscape:相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
+                DB2       :相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
+                DB2_MF    :相当于selectKey的SQL为：SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1
+                Derby      :相当于selectKey的SQL为：VALUES IDENTITY_VAL_LOCAL()
+                HSQLDB      :相当于selectKey的SQL为：CALL IDENTITY()
+                Informix  :相当于selectKey的SQL为：select dbinfo('sqlca.sqlerrd1') from systables where tabid=1
+                MySql      :相当于selectKey的SQL为：SELECT LAST_INSERT_ID()
+                SqlServer :相当于selectKey的SQL为：SELECT SCOPE_IDENTITY()
+                SYBASE      :相当于selectKey的SQL为：SELECT @@IDENTITY
+                JDBC      :相当于在生成的insert元素上添加useGeneratedKeys="true"和keyProperty属性
+         -->
+            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID() as id" type="post" identity="true" />-->
+            <!--
+            <columnOverride column="">
+                使用property属性来指定列要生成的属性名称
+                <property name="name" value="sName"/>
+
+                javaType用于指定生成的domain的属性类型，使用类型的全限定名
+                <property name="javaType" value=""/>
+
+
+                 jdbcType用于指定该列的JDBC类型
+                <property name="jdbcType" value=""/>
+
+
+                typeHandler 用于指定该列使用到的TypeHandler，如果要指定，配置类型处理器的全限定名
+                    注意，mybatis中，不会生成到mybatis-config.xml中的typeHandler
+                    只会生成类似：where id = #{id,jdbcType=BIGINT,typeHandler=com._520it.mybatis.MyTypeHandler}的参数描述
+                <property name="jdbcType" value=""/>
+
+
+                参考table元素的delimitAllColumns配置，默认为false
+                <property name="delimitedColumnName" value=""/>
+
+            </columnOverride>
+            -->
+
+            <!-- ignoreColumn设置一个MGB忽略的列，如果设置了改列，那么在生成的domain中，生成的SQL中，都不会有该列出现
+                column:指定要忽略的列的名字；
+                delimitedColumnName：参考table元素的delimitAllColumns配置，默认为false
+
+                注意，一个table元素中可以有多个ignoreColumn元素
+            <ignoreColumn column="deptId" delimitedColumnName=""/>
+            -->
+        </table>
+
+    </context>
+</generatorConfiguration>
