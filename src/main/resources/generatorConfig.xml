@@ -5,6 +5,8 @@
 
 <generatorConfiguration>
 
+    <properties resource="init.properties"/>
+
     <!--注释字段参考文档http://mbg.cndocs.ml/configreference/xmlconfig.html-->
     <!-- generatorConfiguration元素的子元素下面三个，顺序不能颠倒
         <properties> (0个或1个)
@@ -89,7 +91,7 @@
             3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
         注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
          -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mbappe.newsql.${module}.persistence.ddl" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mbappe.newsql.${module}.persistence.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
 
@@ -116,54 +118,18 @@
         -->
         <table tableName="db_info" domainObjectName="DbInfoDO" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
-            <!-- generatedKey用于生成生成主键的方法，
-            如果设置了该元素，MBG会在生成的<insert>元素中生成一条正确的<selectKey>元素，该元素可选
-            column:主键的列名；
-            sqlStatement：要生成的selectKey语句，有以下可选项：
-                Cloudscape:相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
-                DB2       :相当于selectKey的SQL为： VALUES IDENTITY_VAL_LOCAL()
-                DB2_MF    :相当于selectKey的SQL为：SELECT IDENTITY_VAL_LOCAL() FROM SYSIBM.SYSDUMMY1
-                Derby      :相当于selectKey的SQL为：VALUES IDENTITY_VAL_LOCAL()
-                HSQLDB      :相当于selectKey的SQL为：CALL IDENTITY()
-                Informix  :相当于selectKey的SQL为：select dbinfo('sqlca.sqlerrd1') from systables where tabid=1
-                MySql      :相当于selectKey的SQL为：SELECT LAST_INSERT_ID()
-                SqlServer :相当于selectKey的SQL为：SELECT SCOPE_IDENTITY()
-                SYBASE      :相当于selectKey的SQL为：SELECT @@IDENTITY
-                JDBC      :相当于在生成的insert元素上添加useGeneratedKeys="true"和keyProperty属性
-         -->
-            <!--<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID() as id" type="post" identity="true" />-->
-            <!--
-            <columnOverride column="">
-                使用property属性来指定列要生成的属性名称
-                <property name="name" value="sName"/>
-
-                javaType用于指定生成的domain的属性类型，使用类型的全限定名
-                <property name="javaType" value=""/>
-
-
-                 jdbcType用于指定该列的JDBC类型
-                <property name="jdbcType" value=""/>
-
-
-                typeHandler 用于指定该列使用到的TypeHandler，如果要指定，配置类型处理器的全限定名
-                    注意，mybatis中，不会生成到mybatis-config.xml中的typeHandler
-                    只会生成类似：where id = #{id,jdbcType=BIGINT,typeHandler=com._520it.mybatis.MyTypeHandler}的参数描述
-                <property name="jdbcType" value=""/>
-
-
-                参考table元素的delimitAllColumns配置，默认为false
-                <property name="delimitedColumnName" value=""/>
-
-            </columnOverride>
-            -->
-
-            <!-- ignoreColumn设置一个MGB忽略的列，如果设置了改列，那么在生成的domain中，生成的SQL中，都不会有该列出现
-                column:指定要忽略的列的名字；
-                delimitedColumnName：参考table元素的delimitAllColumns配置，默认为false
-
-                注意，一个table元素中可以有多个ignoreColumn元素
-            <ignoreColumn column="deptId" delimitedColumnName=""/>
-            -->
+        </table>
+        <table tableName="uniq_sqls" domainObjectName="TemplateSqlDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
+        </table>
+        <table tableName="sql_sources" domainObjectName="SqlSourcesDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
+        </table>
+        <table tableName="new_sqls_explain" domainObjectName="ExplainDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
+        </table>
+        <table tableName="new_sqls_info" domainObjectName="NewSqlDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
         </table>
 
     </context>
