@@ -1,4 +1,4 @@
-package com.mbappe.newsql.util;
+package com.mbappe.newsql.utils;
 
 import java.util.HashMap;
 import java.util.Map;
