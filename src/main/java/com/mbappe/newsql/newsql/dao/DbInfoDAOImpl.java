@@ -17,10 +17,18 @@ public class DbInfoDAOImpl {
     @Autowired
     private DbInfoMapper dbInfoMapper;
 
-    List<DbInfoDO> selectByParam(String appName) {
+    public List<DbInfoDO> selectByParam(String appName) {
         DbInfoParam dbInfoParam = new DbInfoParam();
         dbInfoParam.createCriteria().andAppNameEqualTo(appName);
         dbInfoParam.appendOrderByClause(DbInfoParam.OrderCondition.CTIME, DbInfoParam.SortType.ASC);
         return dbInfoMapper.selectByParam(dbInfoParam);
     }
+
+    public List<DbInfoDO> selectAll(String appName) {
+        DbInfoParam dbInfoParam = new DbInfoParam();
+        dbInfoParam.appendOrderByClause(DbInfoParam.OrderCondition.CTIME, DbInfoParam.SortType.ASC);
+        return dbInfoMapper.selectByParam(dbInfoParam);
+    }
+
+
 }

@@ -6,7 +6,7 @@ import java.security.*;
 /**
  * @author: gannicus at 2018/7/25
  */
-public class DataUtil {
+public class AlgorithmUtil {
 
     public static final String EMPTY_STRING = "";
 
