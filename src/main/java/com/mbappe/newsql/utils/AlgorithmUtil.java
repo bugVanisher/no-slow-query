@@ -1,17 +1,20 @@
 package com.mbappe.newsql.utils;
 
-import java.math.BigInteger;
-import java.security.*;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * @author: gannicus at 2018/7/25
  */
+@Component
 public class AlgorithmUtil {
 
-    public static final String EMPTY_STRING = "";
+    @Value("${mbappe.security.secretkey}")
+    private String salt;
 
-    public static String getMd5(String str){
+    public String getMd5(String str) {
         try {
+            str = str + ":" + salt;
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
             byte[] array = md.digest(str.getBytes());
             StringBuilder sb = new StringBuilder();

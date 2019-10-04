@@ -1,7 +1,7 @@
 package com.mbappe.newsql.newsql.services;
 
 import com.mbappe.newsql.newsql.dao.DbInfoDAOImpl;
-import com.mbappe.newsql.newsql.ddl.DbInfoDO;
+import com.mbappe.newsql.newsql.persistence.ddl.DbInfoDO;
 import com.mbappe.newsql.utils.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class DbInfoService {
     private DbInfoDAOImpl dbInfoDao;
 
     public List<DbInfoDO> get(String appName) {
-        return dbInfoDao.selectAll(appName);
+        return null;
     }
 
 }
