@@ -35,8 +35,10 @@
     <properties resource="" url="" /> -->
 
 
-    <context id="MybatisAutoGenerate" targetRuntime="MyBatis3Simple">
+    <context id="MybatisAutoGenerate" targetRuntime="MyBatis3">
 
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
         <!-- 生成的Java文件的编码 -->
         <property name="javaFileEncoding" value="utf8"/>
         <!-- 格式化java代码 -->
@@ -119,17 +121,17 @@
         <table tableName="db_info" domainObjectName="DbInfoDO" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
         </table>
-        <table tableName="uniq_sqls" domainObjectName="TemplateSqlDO" enableCountByExample="false"
+        <table tableName="template_sql" domainObjectName="TemplateSqlDO" enableCountByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="sql_source" domainObjectName="SqlSourceDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+        </table>
+        <table tableName="new_sql_explain" domainObjectName="ExplainDO" enableCountByExample="false"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
         </table>
-        <table tableName="sql_sources" domainObjectName="SqlSourcesDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
-        </table>
-        <table tableName="new_sqls_explain" domainObjectName="ExplainDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
-        </table>
-        <table tableName="new_sqls_info" domainObjectName="NewSqlDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
+        <table tableName="new_sql_info" domainObjectName="NewSqlDO" enableCountByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
         </table>
 
     </context>
