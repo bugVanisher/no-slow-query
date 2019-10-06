@@ -36,7 +36,7 @@ public class SqlService {
         return newSqlDao.getNewSqlByAppName(appName, sqlMd5, dbName);
     }
 
-    private String getParameterizedSql(String sql) {
+    public String getParameterizedSql(String sql) {
         if (StringUtil.isEmpty(sql)) {
             return null;
         }
