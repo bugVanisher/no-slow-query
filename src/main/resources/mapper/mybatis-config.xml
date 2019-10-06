@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- mybatis的配置文件 -->
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <mappers>
+        <mapper resource="mapper/DbInfoDOMapper.xml"/>
+        <mapper resource="mapper/NewSqlDOMapper.xml"/>
+        <mapper resource="mapper/ExplainDOMapper.xml"/>
+        <mapper resource="mapper/SqlSourceDOMapper.xml"/>
+        <mapper resource="mapper/TemplateSqlDOMapper.xml"/>
+    </mappers>
+</configuration>
