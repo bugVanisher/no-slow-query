@@ -534,73 +534,63 @@ public class TemplateSqlDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsIsNull() {
-            addCriterion("final_slevels is null");
+        public Criteria andNoticeLevelIsNull() {
+            addCriterion("notice_level is null");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsIsNotNull() {
-            addCriterion("final_slevels is not null");
+        public Criteria andNoticeLevelIsNotNull() {
+            addCriterion("notice_level is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsEqualTo(String value) {
-            addCriterion("final_slevels =", value, "finalSlevels");
+        public Criteria andNoticeLevelEqualTo(Short value) {
+            addCriterion("notice_level =", value, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsNotEqualTo(String value) {
-            addCriterion("final_slevels <>", value, "finalSlevels");
+        public Criteria andNoticeLevelNotEqualTo(Short value) {
+            addCriterion("notice_level <>", value, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsGreaterThan(String value) {
-            addCriterion("final_slevels >", value, "finalSlevels");
+        public Criteria andNoticeLevelGreaterThan(Short value) {
+            addCriterion("notice_level >", value, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsGreaterThanOrEqualTo(String value) {
-            addCriterion("final_slevels >=", value, "finalSlevels");
+        public Criteria andNoticeLevelGreaterThanOrEqualTo(Short value) {
+            addCriterion("notice_level >=", value, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsLessThan(String value) {
-            addCriterion("final_slevels <", value, "finalSlevels");
+        public Criteria andNoticeLevelLessThan(Short value) {
+            addCriterion("notice_level <", value, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsLessThanOrEqualTo(String value) {
-            addCriterion("final_slevels <=", value, "finalSlevels");
+        public Criteria andNoticeLevelLessThanOrEqualTo(Short value) {
+            addCriterion("notice_level <=", value, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsLike(String value) {
-            addCriterion("final_slevels like", value, "finalSlevels");
+        public Criteria andNoticeLevelIn(List<Short> values) {
+            addCriterion("notice_level in", values, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsNotLike(String value) {
-            addCriterion("final_slevels not like", value, "finalSlevels");
+        public Criteria andNoticeLevelNotIn(List<Short> values) {
+            addCriterion("notice_level not in", values, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsIn(List<String> values) {
-            addCriterion("final_slevels in", values, "finalSlevels");
+        public Criteria andNoticeLevelBetween(Short value1, Short value2) {
+            addCriterion("notice_level between", value1, value2, "noticeLevel");
             return (Criteria) this;
         }
 
-        public Criteria andFinalSlevelsNotIn(List<String> values) {
-            addCriterion("final_slevels not in", values, "finalSlevels");
-            return (Criteria) this;
-        }
-
-        public Criteria andFinalSlevelsBetween(String value1, String value2) {
-            addCriterion("final_slevels between", value1, value2, "finalSlevels");
-            return (Criteria) this;
-        }
-
-        public Criteria andFinalSlevelsNotBetween(String value1, String value2) {
-            addCriterion("final_slevels not between", value1, value2, "finalSlevels");
+        public Criteria andNoticeLevelNotBetween(Short value1, Short value2) {
+            addCriterion("notice_level not between", value1, value2, "noticeLevel");
             return (Criteria) this;
         }
 
