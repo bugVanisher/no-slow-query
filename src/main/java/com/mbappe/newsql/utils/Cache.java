@@ -11,6 +11,8 @@ import java.util.List;
 @Component
 public class Cache {
 
+    // todo 实现缓存
+
     public <T> List<T> getList(String key, Class<T> tClass, String prefix) {
         return null;
     }

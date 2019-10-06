@@ -11,6 +11,7 @@ public class SimpleIdGenerator implements IdGenerator {
 
     @Override
     public Long genId() {
+        // todo 实现分布式genID
         return System.currentTimeMillis();
     }
 
