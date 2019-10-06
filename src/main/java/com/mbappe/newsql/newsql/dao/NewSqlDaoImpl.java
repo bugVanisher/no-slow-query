@@ -19,10 +19,23 @@ public class NewSqlDaoImpl {
     public NewSqlDO getNewSqlByAppName(String appName, String sqlMd5, String dbName) {
         NewSqlDOExample example = new NewSqlDOExample();
         example.createCriteria().andAppNameEqualTo(appName).andSqlMd5EqualTo(sqlMd5).andDbNameEqualTo(dbName);
-        List<NewSqlDO> templateSqlDOList = newSqlDOMapper.selectByExample(example);
-        if (templateSqlDOList.size() > 0) {
-            return templateSqlDOList.get(0);
+        List<NewSqlDO> newSqlDOList = newSqlDOMapper.selectByExample(example);
+        if (null != newSqlDOList && newSqlDOList.size() > 0) {
+            return newSqlDOList.get(0);
         }
         return null;
+    }
+
+
+    public boolean insert(NewSqlDO newSqlDO) {
+        return newSqlDOMapper.insert(newSqlDO) > 0;
+    }
+
+    public boolean updateSqlNum(Long id, Integer num) {
+        NewSqlDOExample example = new NewSqlDOExample();
+        example.createCriteria().andIdEqualTo(id);
+        NewSqlDO newSqlDO = new NewSqlDO();
+        newSqlDO.setNum(num);
+        return newSqlDOMapper.updateByExampleSelective(newSqlDO, example) > 0;
     }
 }
