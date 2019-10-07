@@ -87,4 +87,14 @@ public class SqlService {
 
     }
 
+    public TemplateSqlDO getUniqSqlById(Long id) {
+        return templateSqlDao.getTemplateSqlById(id);
+    }
+
+    public List<String> getTableNamesByAppName(String appName) {
+        return templateSqlDao.selectDistinctTableNames(appName);
+    }
+
+
+
 }

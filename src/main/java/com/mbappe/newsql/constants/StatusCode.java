@@ -2,24 +2,24 @@ package com.mbappe.newsql.constants;
 
 public enum StatusCode {
 
-    SUCCESS(20000000, "ok"),
+    SUCCESS(20000, "ok"),
     /**
      * 服务端内部错误
      */
-    INTERNAL_ERROR(50000008, "未知错误"),
+    INTERNAL_ERROR(50008, "未知错误"),
     /**
      * 应用不合法
      */
-    APP_ERROR(50000001, "未授权应用"),
+    APP_ERROR(50001, "未授权应用"),
 
     /**
      * 签名错误
      */
-    SIGN_ERROR(50000002, "签名错误"),
+    SIGN_ERROR(50002, "签名错误"),
     /**
      * 请求参数不合法
      */
-    ILLEGAL_PARAM(50000003, "请求参数不合法");
+    ILLEGAL_PARAM(50003, "请求参数不合法");
 
     private Integer code;
     private String desc;

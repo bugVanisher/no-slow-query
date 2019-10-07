@@ -6,6 +6,8 @@ import com.mbappe.newsql.newsql.persistence.mapper.TemplateSqlDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -49,5 +51,24 @@ public class TemplateSqlDaoImpl {
 
     public List<TemplateSqlDO> getByExample(TemplateSqlDOExample example) {
         return templateSqlMapper.selectByExample(example);
+    }
+
+    public TemplateSqlDO getTemplateSqlById(Long id) {
+        return templateSqlMapper.selectByPrimaryKey(id);
+    }
+
+    public List<String> selectDistinctTableNames(String appName) {
+        TemplateSqlDOExample templateSqlDOExample = new TemplateSqlDOExample();
+        templateSqlDOExample.createCriteria().andAppNameEqualTo(appName);
+        templateSqlDOExample.setDistinct(true);
+        List<TemplateSqlDO> templateSqlDOList = templateSqlMapper.selectByExample(templateSqlDOExample);
+        if (null != templateSqlDOList && templateSqlDOList.size() > 0) {
+            List<String> tableNames = new ArrayList<>();
+            templateSqlDOList.forEach(
+                    templateSqlDO -> tableNames.add(templateSqlDO.getTablename())
+            );
+            return tableNames;
+        }
+        return Collections.emptyList();
     }
 }

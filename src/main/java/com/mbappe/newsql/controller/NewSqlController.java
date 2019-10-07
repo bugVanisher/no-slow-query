@@ -8,11 +8,9 @@ import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.mbappe.newsql.newsql.services.SqlService;
 import com.mbappe.newsql.utils.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -26,10 +24,27 @@ public class NewSqlController extends BaseController {
 
     @PostMapping("/api/search")
     public AjaxResponseBody<List<TemplateSqlDO>> search(@RequestBody SearchCriteria search) {
-        List<TemplateSqlDO> uniqSqlEntities = sqlService.search(search);
-        AjaxResponseBody<List<TemplateSqlDO>> result = new AjaxResponseBody<>(uniqSqlEntities);
+        List<TemplateSqlDO> templateSqlDOList = sqlService.search(search);
+        AjaxResponseBody<List<TemplateSqlDO>> result = new AjaxResponseBody<>(templateSqlDOList);
         result.setStatus(StatusCode.SUCCESS.getCode());
         result.setMessage(StatusCode.SUCCESS.getDesc());
+        result.setSuccess(true);
+        return result;
+    }
+
+    @GetMapping("/api/getTables")
+    public AjaxResponseBody<List<String>> getTableNames(@RequestParam(name = "appName") String appName) {
+        List<String> tableNames = sqlService.getTableNamesByAppName(appName);
+        AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(tableNames);
+        result.setSuccess(true);
+        result.setStatus(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @GetMapping("/api/getLabels")
+    public AjaxResponseBody<List<String>> selectLabels(@RequestParam(name = "appName") String appName) {
+//        List<String> envs = sqlService.getEnvsByAppName(appName);
+        AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(Collections.emptyList());
         result.setSuccess(true);
         return result;
     }
