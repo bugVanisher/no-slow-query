@@ -9,7 +9,7 @@ public class SearchCriteria {
 
     private String tablename;
 
-    private String env;
+    private String label;
 
     private Integer sctime;
 
@@ -45,12 +45,12 @@ public class SearchCriteria {
         this.tablename = tablename;
     }
 
-    public String getEnv() {
-        return env;
+    public String getLabel() {
+        return label;
     }
 
-    public void setEnv(String env) {
-        this.env = env;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     public Integer getSctime() {

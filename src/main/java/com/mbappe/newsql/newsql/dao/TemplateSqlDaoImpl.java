@@ -46,4 +46,8 @@ public class TemplateSqlDaoImpl {
         templateSqlDO.setHandleStatus(toStatus);
         return templateSqlMapper.updateByExampleSelective(templateSqlDO, templateSqlDOExample) > 0;
     }
+
+    public List<TemplateSqlDO> getByExample(TemplateSqlDOExample example) {
+        return templateSqlMapper.selectByExample(example);
+    }
 }
