@@ -26,7 +26,7 @@ public class NewSqlController extends BaseController {
     public AjaxResponseBody<List<TemplateSqlDO>> search(@RequestBody SearchCriteria search) {
         List<TemplateSqlDO> templateSqlDOList = sqlService.search(search);
         AjaxResponseBody<List<TemplateSqlDO>> result = new AjaxResponseBody<>(templateSqlDOList);
-        result.setStatus(StatusCode.SUCCESS.getCode());
+        result.setCode(StatusCode.SUCCESS.getCode());
         result.setMessage(StatusCode.SUCCESS.getDesc());
         result.setSuccess(true);
         return result;
@@ -37,7 +37,7 @@ public class NewSqlController extends BaseController {
         List<String> tableNames = sqlService.getTableNamesByAppName(appName);
         AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(tableNames);
         result.setSuccess(true);
-        result.setStatus(StatusCode.SUCCESS.getCode());
+        result.setCode(StatusCode.SUCCESS.getCode());
         return result;
     }
 

@@ -1,9 +1,12 @@
 package com.mbappe.newsql.user.dao;
 
 import com.mbappe.newsql.user.persistence.ddl.UserDO;
+import com.mbappe.newsql.user.persistence.ddl.UserDOExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.mbappe.newsql.user.persistence.mapper.UserDOMapper;
+
+import java.util.List;
 
 @Component
 public class UserDoDaoImpl {
@@ -12,13 +15,13 @@ public class UserDoDaoImpl {
     private UserDOMapper userDOMapper;
 
     public UserDO findByUsername(String username) {
+        UserDOExample userDOExample = new UserDOExample();
+        userDOExample.createCriteria().andUsernameEqualTo(username);
+        List<UserDO> userDOList = userDOMapper.selectByExample(userDOExample);
+        if (null != userDOList && userDOList.size() > 0) {
+            return userDOList.get(0);
+        }
         return null;
     }
 
-    /**
-     * 判断用户是否存在
-     */
-    private boolean exist(String username) {
-        return true;
-    }
 }
