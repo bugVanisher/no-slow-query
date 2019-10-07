@@ -20,7 +20,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
         AjaxResponseBody<Boolean> response = new AjaxResponseBody<>();
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setCode(HttpServletResponse.SC_UNAUTHORIZED);
         response.setMessage("authenticate fail");
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);

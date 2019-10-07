@@ -8,9 +8,9 @@ public enum StatusCode {
      */
     INTERNAL_ERROR(50008, "未知错误"),
     /**
-     * 应用不合法
+     * 未授权
      */
-    APP_ERROR(50001, "未授权应用"),
+    FORBIDDEN_OPERATION(50001, "未授权操作"),
 
     /**
      * 签名错误

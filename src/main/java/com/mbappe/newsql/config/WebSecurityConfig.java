@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         http
                 .authorizeRequests()
                 .antMatchers("/", "/register").permitAll()
-                .antMatchers("/user/**").hasAuthority("USER")
+                .antMatchers("/newsql/**").hasAuthority("USER")
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .and()
                 .logout().logoutUrl("/logout")
@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
      * 自定义认证过滤器
      */
     private CustomJSONLoginFilter customJSONLoginFilter() {
-        CustomJSONLoginFilter customJSONLoginFilter = new CustomJSONLoginFilter("/login", userService);
+        CustomJSONLoginFilter customJSONLoginFilter = new CustomJSONLoginFilter("/user/login", userService);
         customJSONLoginFilter.setAuthenticationFailureHandler(new CustomAuthenticationFailureHandler());
         customJSONLoginFilter.setAuthenticationSuccessHandler(new CustomAuthenticationSuccessHandler());
         return customJSONLoginFilter;

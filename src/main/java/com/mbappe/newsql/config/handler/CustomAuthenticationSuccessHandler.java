@@ -20,15 +20,32 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        AjaxResponseBody<Boolean> response = new AjaxResponseBody<>();
+        AjaxResponseBody<Token> response = new AjaxResponseBody<>();
         response.setSuccess(true);
-        response.setData(true);
-        response.setStatus(StatusCode.SUCCESS.getCode());
+        response.setData(new Token("admin-token"));
+        response.setCode(StatusCode.SUCCESS.getCode());
         response.setMessage("login success");
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
         httpServletResponse.setContentType(MediaType.APPLICATION_JSON_VALUE);
         httpServletResponse.setCharacterEncoding(StandardCharsets.UTF_8.toString());
         httpServletResponse.getWriter().write(JSON.toJSONString(response));
+    }
+
+    static class Token {
+        public String getToken() {
+            return token;
+        }
+
+        public void setToken(String token) {
+            this.token = token;
+        }
+
+        Token(String token) {
+            this.token = token;
+        }
+
+        private String token;
+
     }
 
 }

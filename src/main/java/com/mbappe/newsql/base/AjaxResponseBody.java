@@ -1,7 +1,9 @@
 package com.mbappe.newsql.base;
 
+import com.mbappe.newsql.constants.StatusCode;
+
 /**
- *  ajax响应统一对象
+ * ajax响应统一对象
  */
 public class AjaxResponseBody<T> {
     //请求是否成功
@@ -11,7 +13,7 @@ public class AjaxResponseBody<T> {
     public Long id;
 
     //返回状态码
-    public int status;
+    public int code;
 
     //附加信息
     public String message;
@@ -22,8 +24,19 @@ public class AjaxResponseBody<T> {
         this.data = data;
     }
 
+    public AjaxResponseBody(int code, String desc, T data) {
+        super();
+        this.data = data;
+        this.code = code;
+        this.message = desc;
+    }
+
     public AjaxResponseBody() {
         super();
+    }
+
+    public static AjaxResponseBody forbidden() {
+        return new AjaxResponseBody<>(StatusCode.FORBIDDEN_OPERATION.getCode(), StatusCode.FORBIDDEN_OPERATION.getDesc(), false);
     }
 
     public T getData() {
@@ -34,12 +47,12 @@ public class AjaxResponseBody<T> {
         this.data = data;
     }
 
-    public int getStatus() {
-        return status;
+    public int getCode() {
+        return code;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setCode(int code) {
+        this.code = code;
     }
 
     public String getMessage() {
