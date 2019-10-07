@@ -126,6 +126,7 @@ class ConsumerService {
             }
             sqlEntity.setCtime(new Long(sqlDto.getCreatedTime() / 1000).intValue());
             sqlEntity.setUtime(DateUtil.currentSecond());
+            sqlEntity.setNoticeLevel((short)0);
             // 再查一次减少并发问题
             templateSqlDO = sqlService.getTemplateSqlByAppNameOriginalSql(sqlDto.getAppName(), sqlDto.getOriginalSql());
             boolean succ = Boolean.FALSE;
@@ -162,13 +163,13 @@ class ConsumerService {
         }
     }
 
-    private boolean addNewSql(SqlDto sqlDto, String tableName, TemplateSqlDOExt templateSqlEntity, DbInfoDO dbInfoEntity) {
+    private boolean addNewSql(SqlDto sqlDto, String tableName, TemplateSqlDOExt templateSqlDOExt, DbInfoDO dbInfoEntity) {
         logger.info("new sql: {}, {}, {}", sqlDto.getAppName(), dbInfoEntity.getMdb(), sqlDto.getOriginalSql());
         NewSqlDO newSqlInfoEntity = new NewSqlDO();
         Long id = idGenerator.genId();
         newSqlInfoEntity.setId(id);
         newSqlInfoEntity.setAppName(sqlDto.getAppName());
-        newSqlInfoEntity.setUniqId(templateSqlEntity.getId());
+        newSqlInfoEntity.setUniqId(templateSqlDOExt.getId());
         newSqlInfoEntity.setTablename(tableName);
         newSqlInfoEntity.setDbId(dbInfoEntity.getId());
         newSqlInfoEntity.setDbName(dbInfoEntity.getMdb());
@@ -199,7 +200,7 @@ class ConsumerService {
             sqlSourceEntity.setCtime(DateUtil.currentSecond());
             sqlSourceEntity.setUtime(DateUtil.currentSecond());
             sqlSourceDao.add(sqlSourceEntity);
-            anlyseSql(sqlDto, id, templateSqlEntity);
+            anlyseSql(sqlDto, id, templateSqlDOExt);
         }
         return succ;
     }
@@ -212,9 +213,9 @@ class ConsumerService {
      * @param templateSqlEntity sql实体
      */
     @Async
-    private void anlyseSql(SqlDto sqlDto, Long id, TemplateSqlDOExt templateSqlEntity) {
+    void anlyseSql(SqlDto sqlDto, Long id, TemplateSqlDOExt templateSqlDOExt) {
         NoticeLevelEnum noticeLevelEnum = explainService.explain(sqlDto, id);
-        updateFinal(templateSqlEntity, noticeLevelEnum);
+        updateFinal(templateSqlDOExt, noticeLevelEnum);
     }
 
     private void updateFinal(TemplateSqlDOExt templateSqlDOExt, NoticeLevelEnum noticeLevelEnum) {

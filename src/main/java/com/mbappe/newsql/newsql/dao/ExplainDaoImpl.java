@@ -8,9 +8,11 @@ import com.mbappe.newsql.newsql.persistence.ddl.ExplainDO;
 import com.mbappe.newsql.newsql.persistence.ddl.ExplainDOExample;
 import com.mbappe.newsql.newsql.persistence.mapper.ExplainDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ExplainDaoImpl {
 
     @Autowired

@@ -8,9 +8,11 @@ import com.mbappe.newsql.newsql.persistence.ddl.NewSqlDO;
 import com.mbappe.newsql.newsql.persistence.ddl.NewSqlDOExample;
 import com.mbappe.newsql.newsql.persistence.mapper.NewSqlDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class NewSqlDaoImpl {
 
     @Autowired

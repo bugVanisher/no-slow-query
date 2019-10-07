@@ -21,7 +21,7 @@ public class MainController extends BaseController {
     @ResponseBody
     public ResponseEntity<Object> list(@RequestParam(name = "appName") String appName) {
 
-        return new ResponseEntity<>(dbInfoService.get(appName), HttpStatus.OK);
+        return new ResponseEntity<>(dbInfoService.getDbInfo(1L), HttpStatus.OK);
     }
 
     @GetMapping("/hello")

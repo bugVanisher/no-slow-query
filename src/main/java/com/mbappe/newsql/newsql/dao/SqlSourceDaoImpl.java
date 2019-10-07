@@ -7,7 +7,9 @@ package com.mbappe.newsql.newsql.dao;
 import com.mbappe.newsql.newsql.persistence.ddl.SqlSourceDO;
 import com.mbappe.newsql.newsql.persistence.mapper.SqlSourceDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SqlSourceDaoImpl {
 
     @Autowired

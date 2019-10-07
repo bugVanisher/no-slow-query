@@ -49,6 +49,7 @@ public class ExplainService {
             Object obj = DBUtil.getList(dbInfo, ExplainResult.class, String.format(explainTempl, sqlDto.getSql()));
             explainResults = (List<ExplainResult>) obj;
         } catch (Exception e) {
+            e.printStackTrace();
             logger.error("explain error:{},{}", sqlDto.getSql(), dbInfo);
         }
         if (null != explainResults && explainResults.size() > 0) {
