@@ -29,7 +29,7 @@ export default {
   methods: {
     fetchData() {
       getTableList({ appName: 'agent-test' }).then(response => {
-        this.tableNames = response.data.data
+        this.tableNames = response.data
       })
     }
   }
