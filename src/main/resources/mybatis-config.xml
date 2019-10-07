@@ -10,5 +10,6 @@
         <mapper resource="mapper/ExplainDOMapper.xml"/>
         <mapper resource="mapper/SqlSourceDOMapper.xml"/>
         <mapper resource="mapper/TemplateSqlDOMapper.xml"/>
+        <mapper resource="mapper/UserDOMapper.xml"/>
     </mappers>
 </configuration>

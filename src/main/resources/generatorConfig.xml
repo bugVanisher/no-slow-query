@@ -118,19 +118,7 @@
             14. delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
             15. delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         -->
-        <table tableName="db_info" domainObjectName="DbInfoDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
-        </table>
-        <table tableName="template_sql" domainObjectName="TemplateSqlDO" enableCountByExample="true"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
-        </table>
-        <table tableName="sql_source" domainObjectName="SqlSourceDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
-        </table>
-        <table tableName="new_sql_explain" domainObjectName="ExplainDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
-        </table>
-        <table tableName="new_sql_info" domainObjectName="NewSqlDO" enableCountByExample="true"
+        <table tableName="user" domainObjectName="UserDO" enableCountByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
         </table>
 

@@ -9,6 +9,7 @@ import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDOExample;
 import com.mbappe.newsql.utils.AlgorithmUtil;
 import com.mbappe.newsql.utils.DateUtil;
+import com.mbappe.newsql.utils.Logger;
 import com.mbappe.newsql.utils.SqlParseUtil;
 import jodd.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ import java.util.List;
 
 @Service
 public class SqlService {
+
+    private static final Logger logger = Logger.getLogger(SqlService.class);
 
     @Autowired
     private AlgorithmUtil algorithmUtil;
