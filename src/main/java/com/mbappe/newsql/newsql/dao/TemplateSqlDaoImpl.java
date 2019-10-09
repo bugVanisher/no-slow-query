@@ -2,7 +2,7 @@ package com.mbappe.newsql.newsql.dao;
 
 import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDOExample;
-import com.mbappe.newsql.newsql.persistence.mapper.TemplateSqlDOMapper;
+import com.mbappe.newsql.newsql.persistence.mapper.TemplateSqlDOMapperExt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,12 +19,12 @@ import java.util.List;
 public class TemplateSqlDaoImpl {
 
     @Autowired
-    private TemplateSqlDOMapper templateSqlMapper;
+    private TemplateSqlDOMapperExt templateSqlDOMapperExt;
 
     public TemplateSqlDO getTemplateSqlByAppName(String appName, String sqlMd5) {
         TemplateSqlDOExample example = new TemplateSqlDOExample();
         example.createCriteria().andAppNameEqualTo(appName).andTemplateSqlMd5EqualTo(sqlMd5);
-        List<TemplateSqlDO> templateSqlDOList = templateSqlMapper.selectByExample(example);
+        List<TemplateSqlDO> templateSqlDOList = templateSqlDOMapperExt.selectByExample(example);
         if (null != templateSqlDOList && templateSqlDOList.size() > 0) {
             return templateSqlDOList.get(0);
         }
@@ -32,13 +32,13 @@ public class TemplateSqlDaoImpl {
     }
 
     public boolean insert(TemplateSqlDO templateSqlDO) {
-        return templateSqlMapper.insert(templateSqlDO) > 0;
+        return templateSqlDOMapperExt.insert(templateSqlDO) > 0;
     }
 
     public boolean updateById(Long id, TemplateSqlDO templateSqlDO) {
         TemplateSqlDOExample templateSqlDOExample = new TemplateSqlDOExample();
         templateSqlDOExample.createCriteria().andIdEqualTo(id);
-        return templateSqlMapper.updateByExampleSelective(templateSqlDO, templateSqlDOExample) > 0;
+        return templateSqlDOMapperExt.updateByExampleSelective(templateSqlDO, templateSqlDOExample) > 0;
     }
 
     public boolean updateStatus(Long id, Short toStatus, Short fromStatus) {
@@ -46,29 +46,20 @@ public class TemplateSqlDaoImpl {
         templateSqlDOExample.createCriteria().andIdEqualTo(id).andHandleStatusEqualTo(fromStatus);
         TemplateSqlDO templateSqlDO = new TemplateSqlDO();
         templateSqlDO.setHandleStatus(toStatus);
-        return templateSqlMapper.updateByExampleSelective(templateSqlDO, templateSqlDOExample) > 0;
+        return templateSqlDOMapperExt.updateByExampleSelective(templateSqlDO, templateSqlDOExample) > 0;
     }
 
     public List<TemplateSqlDO> getByExample(TemplateSqlDOExample example) {
-        return templateSqlMapper.selectByExample(example);
+        return templateSqlDOMapperExt.selectByExample(example);
     }
 
     public TemplateSqlDO getTemplateSqlById(Long id) {
-        return templateSqlMapper.selectByPrimaryKey(id);
+        return templateSqlDOMapperExt.selectByPrimaryKey(id);
     }
 
     public List<String> selectDistinctTableNames(String appName) {
-        TemplateSqlDOExample templateSqlDOExample = new TemplateSqlDOExample();
-        templateSqlDOExample.createCriteria().andAppNameEqualTo(appName);
-        templateSqlDOExample.setDistinct(true);
-        List<TemplateSqlDO> templateSqlDOList = templateSqlMapper.selectByExample(templateSqlDOExample);
-        if (null != templateSqlDOList && templateSqlDOList.size() > 0) {
-            List<String> tableNames = new ArrayList<>();
-            templateSqlDOList.forEach(
-                    templateSqlDO -> tableNames.add(templateSqlDO.getTablename())
-            );
-            return tableNames;
-        }
-        return Collections.emptyList();
+        return templateSqlDOMapperExt.selectDistinctTableNameByAppName(appName);
     }
+
+
 }
