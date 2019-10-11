@@ -334,52 +334,52 @@ public class AppInfoDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdEqualTo(Integer value) {
+        public Criteria andGroupIdEqualTo(Long value) {
             addCriterion("group_id =", value, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdNotEqualTo(Integer value) {
+        public Criteria andGroupIdNotEqualTo(Long value) {
             addCriterion("group_id <>", value, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdGreaterThan(Integer value) {
+        public Criteria andGroupIdGreaterThan(Long value) {
             addCriterion("group_id >", value, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andGroupIdGreaterThanOrEqualTo(Long value) {
             addCriterion("group_id >=", value, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdLessThan(Integer value) {
+        public Criteria andGroupIdLessThan(Long value) {
             addCriterion("group_id <", value, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdLessThanOrEqualTo(Integer value) {
+        public Criteria andGroupIdLessThanOrEqualTo(Long value) {
             addCriterion("group_id <=", value, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdIn(List<Integer> values) {
+        public Criteria andGroupIdIn(List<Long> values) {
             addCriterion("group_id in", values, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdNotIn(List<Integer> values) {
+        public Criteria andGroupIdNotIn(List<Long> values) {
             addCriterion("group_id not in", values, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdBetween(Integer value1, Integer value2) {
+        public Criteria andGroupIdBetween(Long value1, Long value2) {
             addCriterion("group_id between", value1, value2, "groupId");
             return (Criteria) this;
         }
 
-        public Criteria andGroupIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andGroupIdNotBetween(Long value1, Long value2) {
             addCriterion("group_id not between", value1, value2, "groupId");
             return (Criteria) this;
         }

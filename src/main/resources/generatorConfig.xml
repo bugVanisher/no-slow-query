@@ -123,12 +123,6 @@
         <table tableName="app_info" domainObjectName="AppInfoDO" enableCountByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
         </table>
-        <table tableName="group_info" domainObjectName="GroupInfoDO" enableCountByExample="true"
-               enableSelectByExample="true" enableUpdateByExample="true">
-        </table>
-        <table tableName="group_member_relation" domainObjectName="GroupMemberRelationDO"
-               enableDeleteByExample="false" enableSelectByExample="true">
-        </table>
 
     </context>
 </generatorConfiguration>

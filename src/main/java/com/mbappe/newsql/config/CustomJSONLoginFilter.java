@@ -2,9 +2,11 @@ package com.mbappe.newsql.config;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.mbappe.newsql.user.dto.UserDetail;
 import com.mbappe.newsql.user.persistence.ddl.UserDO;
 import com.mbappe.newsql.user.services.UserService;
 import com.mbappe.newsql.utils.Logger;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -43,10 +45,10 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
         JSONObject requestBody = getRequestBody(httpServletRequest);
         String username = requestBody.getString("username");
         String password = requestBody.getString("password");
-        validateUsernameAndPassword(username, password);
+        UserDO userDO = validateUsernameAndPassword(username, password);
         List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
         simpleGrantedAuthorities.add(new SimpleGrantedAuthority("USER"));
-        return new UsernamePasswordAuthenticationToken(username, password, simpleGrantedAuthorities);
+        return new UsernamePasswordAuthenticationToken(userDO, password, simpleGrantedAuthorities);
     }
 
     /**
@@ -71,7 +73,7 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
     /**
      * 校验用户名和密码
      */
-    private void validateUsernameAndPassword(String username, String password) throws AuthenticationException {
+    private UserDetail validateUsernameAndPassword(String username, String password) throws AuthenticationException {
         // TODO: 2019/10/7 密码加密
         UserDO userDO = userService.getByUsername(username);
         if (userDO == null){
@@ -80,6 +82,9 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
         if(!userDO.getPassword().equals(password)){
             throw new AuthenticationServiceException("error username or password");
         }
+        UserDetail userDetail = new UserDetail();
+        BeanUtils.copyProperties(userDO, userDetail);
+        return userDetail;
     }
 
 }

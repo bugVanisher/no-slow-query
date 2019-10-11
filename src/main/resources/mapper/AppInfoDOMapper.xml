@@ -8,7 +8,7 @@
     -->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="app_name" jdbcType="VARCHAR" property="appName" />
-    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="group_id" jdbcType="BIGINT" property="groupId" />
     <result column="status_" jdbcType="SMALLINT" property="status" />
     <result column="ctime" jdbcType="INTEGER" property="ctime" />
   </resultMap>
@@ -128,7 +128,7 @@
     -->
     insert into app_info (id, app_name, group_id, 
       status_, ctime)
-    values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{groupId,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=BIGINT}, #{appName,jdbcType=VARCHAR}, #{groupId,jdbcType=BIGINT}, 
       #{status,jdbcType=SMALLINT}, #{ctime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.mbappe.newsql.user.persistence.ddl.AppInfoDO">
@@ -162,7 +162,7 @@
         #{appName,jdbcType=VARCHAR},
       </if>
       <if test="groupId != null">
-        #{groupId,jdbcType=INTEGER},
+        #{groupId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
         #{status,jdbcType=SMALLINT},
@@ -196,7 +196,7 @@
         app_name = #{record.appName,jdbcType=VARCHAR},
       </if>
       <if test="record.groupId != null">
-        group_id = #{record.groupId,jdbcType=INTEGER},
+        group_id = #{record.groupId,jdbcType=BIGINT},
       </if>
       <if test="record.status != null">
         status_ = #{record.status,jdbcType=SMALLINT},
@@ -217,7 +217,7 @@
     update app_info
     set id = #{record.id,jdbcType=BIGINT},
       app_name = #{record.appName,jdbcType=VARCHAR},
-      group_id = #{record.groupId,jdbcType=INTEGER},
+      group_id = #{record.groupId,jdbcType=BIGINT},
       status_ = #{record.status,jdbcType=SMALLINT},
       ctime = #{record.ctime,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -235,7 +235,7 @@
         app_name = #{appName,jdbcType=VARCHAR},
       </if>
       <if test="groupId != null">
-        group_id = #{groupId,jdbcType=INTEGER},
+        group_id = #{groupId,jdbcType=BIGINT},
       </if>
       <if test="status != null">
         status_ = #{status,jdbcType=SMALLINT},
@@ -253,7 +253,7 @@
     -->
     update app_info
     set app_name = #{appName,jdbcType=VARCHAR},
-      group_id = #{groupId,jdbcType=INTEGER},
+      group_id = #{groupId,jdbcType=BIGINT},
       status_ = #{status,jdbcType=SMALLINT},
       ctime = #{ctime,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}

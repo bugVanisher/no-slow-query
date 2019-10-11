@@ -97,7 +97,4 @@ public class SqlService {
     public List<String> getTableNamesByAppName(String appName) {
         return templateSqlDao.selectDistinctTableNames(appName);
     }
-
-
-
 }
