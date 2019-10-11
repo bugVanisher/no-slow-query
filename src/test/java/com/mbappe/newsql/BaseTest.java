@@ -13,9 +13,6 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-/**
- * Created by yangyibo on 17/2/10.
- */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {BaseTest.ComponentScanConfig.class, DBConfig.class, MyBatisScannerConfig.class, MyBatisConfig.class})
 @TestPropertySource("/application.properties")

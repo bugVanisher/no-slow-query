@@ -47,7 +47,7 @@
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
 
         <!--2、插件配置-->
-        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
         <!-- 配置内置对象序列号接口 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!--配置内置对象tostring方法生成-->
@@ -55,32 +55,33 @@
 
         <!--3、注释产生配置，为true则不会生成注释-->
         <commentGenerator>
-            <property name="suppressAllComments" value="false" /> <!--是否取消注释-->
-            <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
+            <property name="suppressAllComments" value="false"/> <!--是否取消注释-->
+            <property name="suppressDate" value="true"/> <!-- 是否生成注释代时间戳-->
         </commentGenerator>
 
         <!--4、数据库连接信息-->
         <!--直连数据库： 数据库连接信息，如果你已知数据库密码, 可采用下面密码方式. -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/mbappe?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
-                        userId="gannicus" password="123456" />
+                        userId="gannicus" password="123456"/>
 
         <!--5、java类型配置-->
         <javaTypeResolver>
-            <property name="forceBigDecimals" value="false" /><!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+            <property name="forceBigDecimals"
+                      value="false"/><!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
         </javaTypeResolver>
 
         <!-- 6、生成model对象路径配置
              注意这里请修改成你自己的包路径  -->
         <javaModelGenerator targetPackage="com.mbappe.newsql.${module}.persistence.ddl" targetProject="src/main/java">
-            <property name="enableSubPackages" value="false" />
-            <property name="trimStrings" value="true" />
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!--  7、SQL目录文件路径配置
               注意这里请修改成你自己的包路径  -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
-            <property name="enableSubPackages" value="false" />
+            <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
         <!--  8、DAO类文件路径配置
@@ -93,8 +94,9 @@
             3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
         注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
          -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mbappe.newsql.${module}.persistence.mapper" targetProject="src/main/java">
-            <property name="enableSubPackages" value="false" />
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mbappe.newsql.${module}.persistence.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
         <!-- 9、自动生成表信息配置
@@ -118,8 +120,14 @@
             14. delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
             15. delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         -->
-        <table tableName="user" domainObjectName="UserDO" enableCountByExample="true"
+        <table tableName="app_info" domainObjectName="AppInfoDO" enableCountByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="group_info" domainObjectName="GroupInfoDO" enableCountByExample="true"
+               enableSelectByExample="true" enableUpdateByExample="true">
+        </table>
+        <table tableName="group_member_relation" domainObjectName="GroupMemberRelationDO"
+               enableDeleteByExample="false" enableSelectByExample="true">
         </table>
 
     </context>
