@@ -14,6 +14,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import helpers from './utils/index'
 
 /**
  * This project originally used easy-mock to simulate data,
@@ -27,6 +28,7 @@ import '../mock' // simulation data
 
 Vue.use(ElementUI, { locale })
 
+Vue.prototype.$helpers = helpers
 Vue.config.productionTip = false
 
 new Vue({
