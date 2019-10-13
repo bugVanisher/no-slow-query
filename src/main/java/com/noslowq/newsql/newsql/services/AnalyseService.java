@@ -4,7 +4,6 @@ import com.noslowq.newsql.constants.NoticeLevelEnum;
 import com.noslowq.newsql.constants.ResultLevelsEnum;
 import com.noslowq.newsql.dto.ExplainResult;
 import com.noslowq.newsql.newsql.analysis.IResultRule;
-import com.mbappe.newsql.newsql.analysis.rules.*;
 import com.noslowq.newsql.newsql.analysis.rules.*;
 import org.springframework.stereotype.Service;
 

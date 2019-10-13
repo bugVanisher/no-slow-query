@@ -15,7 +15,6 @@ import com.noslowq.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.noslowq.newsql.newsql.services.DbInfoService;
 import com.noslowq.newsql.newsql.services.ExplainService;
 import com.noslowq.newsql.newsql.services.SqlService;
-import com.mbappe.newsql.utils.*;
 import com.noslowq.newsql.utils.*;
 import jodd.util.StringUtil;
 import org.springframework.beans.BeanUtils;
