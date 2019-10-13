@@ -23,4 +23,8 @@ public class AppInfoDaoImpl {
         appInfoDOExample.createCriteria().andGroupIdIn(groupIds);
         return appInfoDOMapper.selectByExample(appInfoDOExample);
     }
+
+    public AppInfoDO getAppInfo(Long appId) {
+        return appInfoDOMapper.selectByPrimaryKey(appId);
+    }
 }

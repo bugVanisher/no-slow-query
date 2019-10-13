@@ -7,6 +7,8 @@ import com.mbappe.newsql.newsql.dao.TemplateSqlDaoImpl;
 import com.mbappe.newsql.newsql.persistence.ddl.NewSqlDO;
 import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDOExample;
+import com.mbappe.newsql.user.dao.AppInfoDaoImpl;
+import com.mbappe.newsql.user.persistence.ddl.AppInfoDO;
 import com.mbappe.newsql.utils.AlgorithmUtil;
 import com.mbappe.newsql.utils.DateUtil;
 import com.mbappe.newsql.utils.Logger;
@@ -35,6 +37,9 @@ public class SqlService {
 
     @Autowired
     private NewSqlDaoImpl newSqlDao;
+
+    @Autowired
+    private AppInfoDaoImpl appInfoDao;
 
     public TemplateSqlDO getTemplateSqlByAppNameOriginalSql(String appName, String sql) {
         String sqlMd5 = algorithmUtil.getMd5(getParameterizedSql(sql));
@@ -96,5 +101,9 @@ public class SqlService {
 
     public List<String> getTableNamesByAppName(String appName) {
         return templateSqlDao.selectDistinctTableNames(appName);
+    }
+
+    public AppInfoDO getAppInfoById(Long appId) {
+        return appInfoDao.getAppInfo(appId);
     }
 }

@@ -6,7 +6,9 @@ import com.mbappe.newsql.constants.StatusCode;
 import com.mbappe.newsql.dto.req.SearchCriteria;
 import com.mbappe.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.mbappe.newsql.newsql.services.SqlService;
+import com.mbappe.newsql.user.persistence.ddl.AppInfoDO;
 import com.mbappe.newsql.utils.Logger;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,9 +34,13 @@ public class NewSqlController extends BaseController {
         return result;
     }
 
-    @GetMapping("/api/getTables")
-    public AjaxResponseBody<List<String>> getTableNames(@RequestParam(name = "appName") String appName) {
-        List<String> tableNames = sqlService.getTableNamesByAppName(appName);
+    @GetMapping("/api/getTablesByAppId")
+    public AjaxResponseBody<List<String>> getTableNames(@RequestParam(name = "appId") Long appId) {
+        AppInfoDO appInfoDO = sqlService.getAppInfoById(appId);
+        if (null == appInfoDO) {
+            return new AjaxResponseBody<>(null);
+        }
+        List<String> tableNames = sqlService.getTableNamesByAppName(appInfoDO.getAppName());
         AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(tableNames);
         result.setSuccess(true);
         result.setCode(StatusCode.SUCCESS.getCode());
