@@ -22,3 +22,10 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getApps() {
+  return request({
+    url: '/user/api/getApps',
+    method: 'get'
+  })
+}

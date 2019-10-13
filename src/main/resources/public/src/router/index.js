@@ -56,6 +56,12 @@ export const constantRouterMap = [
         name: 'Tree',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
+      },
+      {
+        path: 'newSqlList',
+        name: 'NewSqlList',
+        component: () => import('@/views/table/newSqlList'),
+        meta: { title: 'NewSqlList', icon: 'table' }
       }
     ]
   },
