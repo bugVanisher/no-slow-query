@@ -1,5 +1,7 @@
 package com.noslowq.newsql.config;
 
+import com.noslowq.newsql.base.CustomExceptionResolver;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -21,6 +23,11 @@ public class MvcConfigurer extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
 
         super.addResourceHandlers(registry);
+    }
+
+    @Bean
+    public CustomExceptionResolver customExceptionResolver() {
+        return new CustomExceptionResolver();
     }
 
 }
