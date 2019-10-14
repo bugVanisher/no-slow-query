@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!-- 从spring中获取配置，如获取不到会使用默认值 -->
+    <springProperty scope="context" name="LOG_HOME" source="logging.path"/>
+    <springProperty scope="context" name="LOG_LEVEL" source="logging.output.level"/>
+    <springProperty scope="context" name="LOG_MAX_SIZE" source="logging.file.max-size"/>
+    <springProperty scope="context" name="LOG_TOTAL_SIZE_CAP" source="logging.file.total-size-cap"/>
+    <springProperty scope="context" name="LOG_MAX_HISTORY" source="logging.file.max-history"/>
+    <!-- 输出样式 -->
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%logger{10}]-[%p] %m%n"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%cyan(%t)] [%yellow(%logger{10})]-[%highlight(%p)] %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Main-Log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME:-logs}/logback/main.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME:-logs}/logback/main-%d{yyyy-MM-dd}_%i.log.zip</FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+    </appender>
+
+
+    <appender name="Error-Log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME:-logs}/logback/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME:-logs}/logback/error-%d{yyyy-MM-dd}_%i.log.zip</FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="Warn-Log" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME:-logs}/logback/warn.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_HOME:-logs}/logback/warn-%d{yyyy-MM-dd}_%i.log.zip</FileNamePattern>
+            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
+            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
+            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${pattern}</pattern>
+        </encoder>
+        <!-- log filter -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- 关闭类中某个级别的输出 OFF全部关闭 , INFO,DEBUG ...
+    <logger name="x.x.Constants">
+        <level value="OFF"/>
+    </logger>
+    -->
+
+    <!-- log output level -->
+    <root level="${LOG_LEVEL:-INFO}">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="Main-Log"/>
+        <appender-ref ref="Warn-Log"/>
+        <appender-ref ref="Error-Log"/>
+    </root>
+
+</configuration>

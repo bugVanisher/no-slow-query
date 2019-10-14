@@ -37,6 +37,7 @@ public class NewSqlController extends BaseController {
     public AjaxResponseBody<List<String>> getTableNames(@RequestParam(name = "appId") Long appId) {
         AppInfoDO appInfoDO = sqlService.getAppInfoById(appId);
         if (null == appInfoDO) {
+            appInfoDO.getAppName();
             return new AjaxResponseBody<>(null);
         }
         List<String> tableNames = sqlService.getTableNamesByAppName(appInfoDO.getAppName());
