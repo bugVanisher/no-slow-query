@@ -1,84 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false">
-    <!-- 从spring中获取配置，如获取不到会使用默认值 -->
-    <springProperty scope="context" name="LOG_HOME" source="logging.path"/>
-    <springProperty scope="context" name="LOG_LEVEL" source="logging.output.level"/>
-    <springProperty scope="context" name="LOG_MAX_SIZE" source="logging.file.max-size"/>
-    <springProperty scope="context" name="LOG_TOTAL_SIZE_CAP" source="logging.file.total-size-cap"/>
-    <springProperty scope="context" name="LOG_MAX_HISTORY" source="logging.file.max-history"/>
-    <!-- 输出样式 -->
-    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%logger{10}]-[%p] %m%n"/>
+<configuration>
+    <!-- https://github.com/spring-projects/spring-boot/blob/v1.5.13.RELEASE/spring-boot/src/main/resources/org/springframework/boot/logging/logback/defaults.xml -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
 
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%blue(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%cyan(%t)] [%yellow(%logger{10})]-[%highlight(%p)] %m%n</pattern>
+    <property name="APP_NAME" value="noslowq" />
+    <property name="LOG_PATH" value="${user.home}/logs" />
+    <property name="LOG_FILE" value="${LOG_PATH}/application.log" />
+
+    <appender name="APPLICATION"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE}</file>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE}.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>168</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
         </encoder>
     </appender>
 
-    <appender name="Main-Log" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME:-logs}/logback/main.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME:-logs}/logback/main-%d{yyyy-MM-dd}_%i.log.zip</FileNamePattern>
-            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
-            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
-            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${pattern}</pattern>
-        </encoder>
-    </appender>
-
-
-    <appender name="Error-Log" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME:-logs}/logback/error.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME:-logs}/logback/error-%d{yyyy-MM-dd}_%i.log.zip</FileNamePattern>
-            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
-            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
-            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${pattern}</pattern>
-        </encoder>
-
+    <appender name="ErrorAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
         </filter>
-    </appender>
-
-    <appender name="Warn-Log" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOG_HOME:-logs}/logback/warn.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_HOME:-logs}/logback/warn-%d{yyyy-MM-dd}_%i.log.zip</FileNamePattern>
-            <MaxHistory>${LOG_MAX_HISTORY:-30}</MaxHistory>
-            <MaxFileSize>${LOG_MAX_SIZE:-10MB}</MaxFileSize>
-            <totalSizeCap>${LOG_TOTAL_SIZE_CAP:-10GB}</totalSizeCap>
-        </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${pattern}</pattern>
+        <file>${LOG_PATH}/error.log</file>
+        <encoder>
+            <pattern>
+                TIME=%date`MSG=%msg`LV=%level`THREAD={%thread}`NAME={%logger{20}}`HOST=%X{host}`STACK=%X{stack}
+                %n
+            </pattern>
         </encoder>
-        <!-- log filter -->
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>WARN</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
-        </filter>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error.log.%d{yyyy-MM-dd-HH}.%i
+            </fileNamePattern>
+            <maxHistory>168</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
     </appender>
 
-    <!-- 关闭类中某个级别的输出 OFF全部关闭 , INFO,DEBUG ...
-    <logger name="x.x.Constants">
-        <level value="OFF"/>
-    </logger>
-    -->
+    <appender name="NewSqlAppender"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator>
+                <matcher>
+                    <Name>newsql</Name>
+                    <regex>com.noslowq.newsql.*</regex>
+                </matcher>
 
-    <!-- log output level -->
-    <root level="${LOG_LEVEL:-INFO}">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="Main-Log"/>
-        <appender-ref ref="Warn-Log"/>
-        <appender-ref ref="Error-Log"/>
+                <expression>newsql.matches(logger)</expression>
+            </evaluator>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>ACCEPT</OnMatch>
+        </filter>
+        <file>${LOG_PATH}/noslowq.log</file>
+        <encoder>
+            <pattern>TIME=%date`MSG=%msg`%n</pattern>
+        </encoder>
+
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/noslowq.log.%d{yyyy-MM-dd-HH}.%i
+            </fileNamePattern>
+            <maxHistory>168</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="APPLICATION" />
+        <appender-ref ref="ErrorAppender" />
+        <appender-ref ref="NewSqlAppender" />
     </root>
-
 </configuration>
