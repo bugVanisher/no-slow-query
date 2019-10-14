@@ -3,7 +3,7 @@
     <div class="panel">
       <div
         class="module"
-        style="padding: 0;"
+        style="padding:0;"
       >
         <el-form
           ref="sform"
@@ -18,7 +18,12 @@
               clearable
               placeholder="请选择表"
             >
-              <el-option v-for="(item, index) in sform.tablenames" :value="item" :label="item" :key="index"></el-option>
+              <el-option
+                v-for="(item, index) in sform.tablenames"
+                :value="item"
+                :label="item"
+                :key="index"
+              />
             </el-select>
           </el-form-item>
           <el-form-item label="标识符">
@@ -28,21 +33,19 @@
               clearable
               placeholder="请选择标识符"
             >
-              <el-option> </el-option>
+              <el-option />
             </el-select>
           </el-form-item>
           <el-date-picker
             v-model="sctime"
             type="date"
             placeholder="开始日期-默认15天前"
-          >
-          </el-date-picker>
+          />
           <el-date-picker
             v-model="ectime"
             type="date"
             placeholder="选择结束日期"
-          >
-          </el-date-picker>
+          />
           <el-form-item>
             <el-button
               type="primary"
@@ -67,17 +70,17 @@
             prop="label"
             label="标识符"
             width="110px"
-          ></el-table-column>
+          />
           <el-table-column
             prop="tablename"
             label="表名"
             width="150px"
-          ></el-table-column>
+          />
           <el-table-column
             prop="newSql"
             label="sql"
             width="450px"
-          ></el-table-column>
+          />
           <el-table-column
             :formatter="dateForMatter"
             prop="ctime"
@@ -108,7 +111,7 @@
             class-name="uae-action-column"
             width="160px"
           >
-            <template scope="scope">
+            <template slot-scope="scope">
               <el-button
                 v-if="scope.row.status == 1"
                 size="small"
@@ -137,7 +140,7 @@
         title="提示"
         width="30%"
       >
-        <span v-if="this.action=='ignored'">确定要忽略吗?</span>
+        <span v-if="action=='ignored'">确定要忽略吗?</span>
         <span
           slot="footer"
           class="dialog-footer"
@@ -148,6 +151,7 @@
             @click="change()"
           >确 定</el-button>
         </span>
+
       </el-dialog>
 
     </div>
@@ -193,20 +197,20 @@ export default {
   methods: {
     init(appId) {
       this.loading = true
-          getTablesByAppId({ "appId": appId }).then(info => {
+      getTablesByAppId({ 'appId': appId }).then(info => {
+        if (info.success) {
+          this.sform.tablenames = info.data || []
+          getLablesByAppId({ appId: appId }).then(info => {
+            this.sform.labels = info.data || []
+          })
+          getNewsqlByAppId(this.appName, this.sform.tablename, '', 1, 200, 0, 0).then(info => {
             if (info.success) {
-              this.sform.tablenames = info.data || []
-              getLablesByAppId({ appId: appId }).then(info => {
-                this.sform.labels = info.data || []
-              })
-              getNewsqlByAppId(this.appName, this.sform.tablename, '', 1, 200, 0, 0).then(info => {
-                if (info.success) {
-                  this.items = info.data || []
-                  this.loading = false
-                }
-              })
+              this.items = info.data || []
+              this.loading = false
             }
           })
+        }
+      })
     },
     onSubmit() {
       var st = new Date(this.sctime)
