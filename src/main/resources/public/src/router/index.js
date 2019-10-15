@@ -52,12 +52,14 @@ export const constantRouterMap = [
         meta: { title: 'Table', icon: 'table' }
       },
       {
+        hidden: true,
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
         meta: { title: 'Tree', icon: 'tree' }
       },
       {
+        hidden: true,
         path: 'newSqlList',
         name: 'NewSqlList',
         component: () => import('@/views/table/newSqlList'),

@@ -206,14 +206,13 @@ class ConsumerService {
     }
 
     /**
-     * 分析sql,异步化
      *
-     * @param sqlDto            sql消息
-     * @param id                新增sqlID
-     * @param templateSqlEntity sql实体
+     * @type sqlDto
+     * @type id
+     * @type templateSqlDOExt
      */
     @Async
-    void anlyseSql(SqlDto sqlDto, Long id, TemplateSqlDOExt templateSqlDOExt) {
+    private void anlyseSql(SqlDto sqlDto, Long id, TemplateSqlDOExt templateSqlDOExt) {
         NoticeLevelEnum noticeLevelEnum = explainService.explain(sqlDto, id);
         updateFinal(templateSqlDOExt, noticeLevelEnum);
     }

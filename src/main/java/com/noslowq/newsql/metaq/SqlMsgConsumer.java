@@ -1,6 +1,7 @@
 package com.noslowq.newsql.metaq;
 
 import com.google.gson.Gson;
+import com.noslowq.newsql.utils.Logger;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 @RocketMQMessageListener(topic = "${spring.rocketmq.topic}", consumerGroup = "${spring.rocketmq.consumer.group}")
 public class SqlMsgConsumer implements RocketMQListener<SqlDto> {
 
+    private static final Logger logger = Logger.getLogger(SqlMsgConsumer.class);
+
     private static final Gson GSON = new Gson();
 
     @Autowired
@@ -20,11 +23,11 @@ public class SqlMsgConsumer implements RocketMQListener<SqlDto> {
     @Override
     public void onMessage(SqlDto sqlDto) {
         if (null != sqlDto) {
-            System.out.printf("get msg:%s\n", GSON.toJson(sqlDto));
+            logger.debug("get msg:{}", GSON.toJson(sqlDto));
             try {
                 consumerService.handle(sqlDto);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e, "consume error.");
             }
         }
     }
