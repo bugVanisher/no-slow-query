@@ -21,7 +21,7 @@ public class CustomExceptionResolver implements HandlerExceptionResolver {
         Map<String, Object> map = new HashMap<>();
         map.put("code", StatusCode.INTERNAL_ERROR.getCode());
         map.put("success", false);
-        map.put("message", e.getClass());
+        map.put("message", e.getMessage());
         mv.addAllObjects(map);
         logger.error(e, "uncaught exception");
         return mv;

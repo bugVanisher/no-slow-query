@@ -12,7 +12,7 @@
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="AppName" width="200">
+      <el-table-column align="center" label="AppName">
         <template slot-scope="scope">
           {{ scope.row.appName }}
         </template>
@@ -33,7 +33,7 @@
           <span>{{ formatTime(scope.row.ctime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="link">
+      <el-table-column align="center" label="link" width="200">
         <template slot-scope="scope">
           <el-button @click="watchDetail(scope.row)">查看</el-button>
         </template>

@@ -8,7 +8,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getTableList } from '@/api/table'
 
 export default {
   name: 'Dashboard',
@@ -28,9 +27,6 @@ export default {
   },
   methods: {
     fetchData() {
-      getTableList({ appName: 'agent-test' }).then(response => {
-        this.tableNames = response.data
-      })
     }
   }
 }

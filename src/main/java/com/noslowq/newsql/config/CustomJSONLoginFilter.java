@@ -75,7 +75,12 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
      */
     private UserDetail validateUsernameAndPassword(String username, String password) throws AuthenticationException {
         // TODO: 2019/10/7 密码加密
-        UserDO userDO = userService.getByUsername(username);
+        UserDO userDO = null;
+        try {
+            userDO = userService.getByUsername(username);
+        } catch (Exception e) {
+            log.error(e, "get user error");
+        }
         if (userDO == null){
             throw new UsernameNotFoundException("user not exist");
         }

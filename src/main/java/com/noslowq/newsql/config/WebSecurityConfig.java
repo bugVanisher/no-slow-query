@@ -24,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     /**
      * 匹配 "/register" 路径，不需要权限即可访问
      * 匹配 "/user" 及其以下所有路径，都需要 "USER" 权限
+     * 匹配 "/newsql" 及其以下所有路径，都需要 "USER" 权限
      * 登录地址为 "/login"，登录成功返回响应状态码
      * 退出登录的地址为 "/logout"，退出成功返回响应状态码
      * 禁用 CSRF
