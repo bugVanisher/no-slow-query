@@ -83,7 +83,7 @@ export default {
       return this.$helpers.parseTime(timestamp, '')
     },
     watchDetail(row) {
-      const { href } = this.$router.resolve({ path: '/example/newSqlList', query: { appId: row.id }})
+      const { href } = this.$router.resolve({ name: 'NewSqlList', query: { appId: row.id }})
       window.open(href, '_blank')
     }
   }

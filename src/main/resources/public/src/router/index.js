@@ -39,17 +39,17 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/example',
+    path: '/newsql',
     component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
+    redirect: '/newsql/appList',
+    name: 'Newsql',
+    meta: { title: 'Newsql', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'appList',
+        name: 'AppList',
+        component: () => import('@/views/newsql/appList'),
+        meta: { title: 'AppList', icon: 'table' }
       },
       {
         hidden: true,
@@ -62,7 +62,7 @@ export const constantRouterMap = [
         hidden: true,
         path: 'newSqlList',
         name: 'NewSqlList',
-        component: () => import('@/views/table/newSqlList'),
+        component: () => import('@/views/newsql/newSqlList'),
         meta: { title: 'NewSqlList', icon: 'table' }
       }
     ]
@@ -82,59 +82,19 @@ export const constantRouterMap = [
   },
 
   {
-    path: '/nested',
+    path: '/notification',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/notification/settings',
+    name: 'Notification',
     meta: {
-      title: 'Nested',
+      title: 'Notification',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
+        path: 'settings',
         component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        meta: { title: 'Notify Settings' }
       }
     ]
   },
@@ -144,7 +104,7 @@ export const constantRouterMap = [
     component: Layout,
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        path: 'https://bugVanisher.github.io',
         meta: { title: 'External Link', icon: 'link' }
       }
     ]
