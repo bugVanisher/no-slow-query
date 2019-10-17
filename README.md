@@ -66,5 +66,10 @@ npm install
 npm run dev
 ```  
 
-前端项目中已经配置了端口转发，将数据转发到SpringBoot（7001端口）上，因此项目启动之后，在浏览器中输入http://localhost:9528就可以访问我们的前端项目了，所有的请求通过端口转发将数据传到SpringBoot中（注意此时不要关闭SpringBoot项目）。
+前端项目中已经配置了端口转发，将数据转发到SpringBoot（7001端口）上，因此项目启动之后，在浏览器中输入
+
+```
+http://localhost:9528 
+```
+就可以访问我们的前端项目了，所有的请求通过端口转发将数据传到SpringBoot中（注意此时不要关闭SpringBoot项目）。
 
