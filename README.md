@@ -1,5 +1,5 @@
 # 系统介绍
-NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自动做分析和通知的系统，由 [客户端](https://github.com/bugVanisher/newsql-agent) 和 [服务端](https://github.com/bugVanisher/no-slow-query)组成。
+NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自动做分析和通知的系统，由 [客户端](https://github.com/bugVanisher/newsql-agent) 和 [服务端](https://github.com/bugVanisher/no-slow-query) 组成。
 
 （系统开发的动因可以查看 [这里](https://bugvanisher.github.io/2019/02/09/why-we-need-sql-analyse/)）
 
@@ -9,7 +9,12 @@ NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自�
 
 # 整体效果
 
-[have a look](https://bugvanisher.github.io/2019/02/17/the-demonstration-of-mbappe/)
+1、登录页面
+
+![](docs/static/login.png)
+
+
+[更多效果展示](https://bugvanisher.github.io/2019/02/17/the-demonstration-of-mbappe/)
 
 # 技术栈
 ## 后端技术栈
@@ -39,7 +44,7 @@ NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自�
 ## Step2-启动后端springboot
 springboot常见的启动方式有三种：
 
-1、项目导入IDE后，Run执行Application.java中的main方法（推荐）
+1、项目导入IDE后，Run执行Application.java中的main方法（开发模式推荐）
 
 2、pom.xml文件引入spring-boot-maven-plugin插件(本项目已引入)，在IDEA中的maven工具或命令行执行mvn命令
 
@@ -72,4 +77,25 @@ npm run dev
 http://localhost:9528 
 ```
 就可以访问我们的前端项目了，所有的请求通过端口转发将数据传到SpringBoot中（注意此时不要关闭SpringBoot项目）。
+
+# 部署发布
+为了简化部署，建议不使用真正的前后端分离的方式部署，而是将vue项目打包后放入springboot的静态文件目录，只启动springboot即可。
+
+### 打包
+
+```
+# 打包前端文件
+npm run build
+
+# 拷贝文件到spring静态目录static
+mvn process-resources
+
+# 打包springboot
+mvn install
+```
+
+### 部署
+```
+java -jar noslowq-server-{version}.jar
+```
 

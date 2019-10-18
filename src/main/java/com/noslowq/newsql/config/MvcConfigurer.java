@@ -20,9 +20,6 @@ public class MvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        registry.addResourceHandler("/public/**").addResourceLocations("classpath:/public/");
-
-        super.addResourceHandlers(registry);
     }
 
     @Bean
