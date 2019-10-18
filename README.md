@@ -23,6 +23,8 @@ NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自�
 2.SpringSecurity  
 3.MyBatis  
 4.MySQL  
+5.Rocketmq  
+6.Fastsql  
 
 ## 前端技术栈
 
@@ -30,15 +32,17 @@ NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自�
 2.ElementUI  
 3.axios  
 4.vue-router  
+5.vue-admin-template  
+6.lint  
 
 # 本地开发环境
 ## Step1-准备数据库
 
-1.clone项目到本地```https://github.com/bugVanisher/no-slow-query```  
+1、clone项目到本地
 
-2.数据库脚本放在schema目录下，在MySQL中创建完 *noslowq* 数据库并在其中执行目录下的所有数据库脚本
+2、数据库脚本放在schema目录下，在MySQL中创建 *noslowq* 数据库并在其中执行目录下的所有数据库脚本
 
-3.数据库配置在项目的resources目录下的application.properties文件中 
+3、数据库配置在项目的resources目录下的application.properties文件中,请进行相应修改 
 
 
 ## Step2-启动后端springboot
@@ -71,12 +75,12 @@ npm install
 npm run dev
 ```  
 
-前端项目中已经配置了端口转发，将数据转发到SpringBoot（7001端口）上，因此项目启动之后，在浏览器中输入
+前端项目中已经配置了端口转发，将数据转发到SpringBoot（7001端口）上，因此项目启动之后，在浏览器中访问
 
 ```
 http://localhost:9528 
 ```
-就可以访问我们的前端项目了，所有的请求通过端口转发将数据传到SpringBoot中（注意此时不要关闭SpringBoot项目）。
+所有的请求通过端口转发将数据传到SpringBoot中（注意此时不要关闭SpringBoot项目）。
 
 # 部署发布
 为了简化部署，建议不使用真正的前后端分离的方式部署，而是将vue项目打包后放入springboot的静态文件目录，只启动springboot即可。
@@ -85,9 +89,9 @@ http://localhost:9528
 
 ```
 # 打包前端文件
-npm run build
+cd src/main/resources/public && npm run build
 
-# 拷贝文件到spring静态目录static
+# 拷贝文件到spring静态目录static, 返回项目根目录执行
 mvn process-resources
 
 # 打包springboot
