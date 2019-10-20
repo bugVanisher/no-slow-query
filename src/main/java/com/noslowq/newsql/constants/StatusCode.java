@@ -17,6 +17,10 @@ public enum StatusCode {
      */
     SIGN_ERROR(50002, "签名错误"),
     /**
+     * 数据不存在
+     */
+    NOT_EXIST(50004, "数据不存在"),
+    /**
      * 请求参数不合法
      */
     ILLEGAL_PARAM(50003, "请求参数不合法");

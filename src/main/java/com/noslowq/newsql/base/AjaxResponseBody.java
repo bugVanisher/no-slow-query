@@ -36,7 +36,11 @@ public class AjaxResponseBody<T> {
     }
 
     public static AjaxResponseBody forbidden() {
-        return new AjaxResponseBody<>(StatusCode.FORBIDDEN_OPERATION.getCode(), StatusCode.FORBIDDEN_OPERATION.getDesc(), false);
+        return new AjaxResponseBody<>(StatusCode.FORBIDDEN_OPERATION.getCode(), StatusCode.FORBIDDEN_OPERATION.getDesc(), null);
+    }
+
+    public AjaxResponseBody<T> dataNotExist() {
+        return new AjaxResponseBody<T>(StatusCode.NOT_EXIST.getCode(), StatusCode.NOT_EXIST.getDesc(), null);
     }
 
     public T getData() {
