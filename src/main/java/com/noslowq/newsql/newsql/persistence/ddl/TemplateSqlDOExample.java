@@ -394,6 +394,76 @@ public class TemplateSqlDOExample {
             return (Criteria) this;
         }
 
+        public Criteria andTemplateSqlIsNull() {
+            addCriterion("template_sql is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlIsNotNull() {
+            addCriterion("template_sql is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlEqualTo(String value) {
+            addCriterion("template_sql =", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlNotEqualTo(String value) {
+            addCriterion("template_sql <>", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlGreaterThan(String value) {
+            addCriterion("template_sql >", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlGreaterThanOrEqualTo(String value) {
+            addCriterion("template_sql >=", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlLessThan(String value) {
+            addCriterion("template_sql <", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlLessThanOrEqualTo(String value) {
+            addCriterion("template_sql <=", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlLike(String value) {
+            addCriterion("template_sql like", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlNotLike(String value) {
+            addCriterion("template_sql not like", value, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlIn(List<String> values) {
+            addCriterion("template_sql in", values, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlNotIn(List<String> values) {
+            addCriterion("template_sql not in", values, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlBetween(String value1, String value2) {
+            addCriterion("template_sql between", value1, value2, "templateSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andTemplateSqlNotBetween(String value1, String value2) {
+            addCriterion("template_sql not between", value1, value2, "templateSql");
+            return (Criteria) this;
+        }
+
         public Criteria andTemplateSqlMd5IsNull() {
             addCriterion("template_sql_md5 is null");
             return (Criteria) this;

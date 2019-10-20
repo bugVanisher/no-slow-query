@@ -47,7 +47,7 @@
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
 
         <!--2、插件配置-->
-        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>
+<!--        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>-->
         <!-- 配置内置对象序列号接口 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!--配置内置对象tostring方法生成-->
@@ -62,7 +62,7 @@
         <!--4、数据库连接信息-->
         <!--直连数据库： 数据库连接信息，如果你已知数据库密码, 可采用下面密码方式. -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/mbappe?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
+                        connectionURL="jdbc:mysql://localhost:3306/noslowq?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8"
                         userId="gannicus" password="123456"/>
 
         <!--5、java类型配置-->
@@ -73,7 +73,7 @@
 
         <!-- 6、生成model对象路径配置
              注意这里请修改成你自己的包路径  -->
-        <javaModelGenerator targetPackage="com.mbappe.newsql.${module}.persistence.ddl" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="com.noslowq.newsql.${module}.persistence.ddl" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
@@ -94,7 +94,7 @@
             3，XMLMAPPER：会生成Mapper接口，接口完全依赖XML；
         注意，如果context是MyBatis3Simple：只支持ANNOTATEDMAPPER和XMLMAPPER
          -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mbappe.newsql.${module}.persistence.mapper"
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.noslowq.newsql.${module}.persistence.mapper"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
@@ -120,8 +120,17 @@
             14. delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
             15. delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         -->
-        <table tableName="app_info" domainObjectName="AppInfoDO" enableCountByExample="true"
+        <table tableName="template_sql" domainObjectName="TemplateSqlDO" enableCountByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
+            <columnOverride column="template_sql" jdbcType="VARCHAR"></columnOverride>
+        </table>
+        <table tableName="new_sql_explain" domainObjectName="ExplainDO" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
+            <columnOverride column="new_sql" jdbcType="VARCHAR"></columnOverride>
+        </table>
+        <table tableName="new_sql_info" domainObjectName="NewSqlDO" enableCountByExample="true"
+               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
+            <columnOverride column="new_sql" jdbcType="VARCHAR"></columnOverride>
         </table>
 
     </context>

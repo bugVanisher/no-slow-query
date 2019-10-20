@@ -654,6 +654,76 @@ public class NewSqlDOExample {
             return (Criteria) this;
         }
 
+        public Criteria andNewSqlIsNull() {
+            addCriterion("new_sql is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlIsNotNull() {
+            addCriterion("new_sql is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlEqualTo(String value) {
+            addCriterion("new_sql =", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlNotEqualTo(String value) {
+            addCriterion("new_sql <>", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlGreaterThan(String value) {
+            addCriterion("new_sql >", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlGreaterThanOrEqualTo(String value) {
+            addCriterion("new_sql >=", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlLessThan(String value) {
+            addCriterion("new_sql <", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlLessThanOrEqualTo(String value) {
+            addCriterion("new_sql <=", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlLike(String value) {
+            addCriterion("new_sql like", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlNotLike(String value) {
+            addCriterion("new_sql not like", value, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlIn(List<String> values) {
+            addCriterion("new_sql in", values, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlNotIn(List<String> values) {
+            addCriterion("new_sql not in", values, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlBetween(String value1, String value2) {
+            addCriterion("new_sql between", value1, value2, "newSql");
+            return (Criteria) this;
+        }
+
+        public Criteria andNewSqlNotBetween(String value1, String value2) {
+            addCriterion("new_sql not between", value1, value2, "newSql");
+            return (Criteria) this;
+        }
+
         public Criteria andNumIsNull() {
             addCriterion("num is null");
             return (Criteria) this;
