@@ -8,4 +8,12 @@
     from template_sql
     where app_name = #{appName,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectDistinctLabelByAppName" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+      distinct
+      label
+    from template_sql
+    where app_name = #{appName,jdbcType=VARCHAR}
+  </select>
 </mapper>

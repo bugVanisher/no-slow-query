@@ -59,5 +59,15 @@ public class TemplateSqlDaoImpl {
         return templateSqlDOMapperExt.selectDistinctTableNameByAppName(appName);
     }
 
+    public List<String> selectDistinctLabels(String appName) {
+        return templateSqlDOMapperExt.selectDistinctLabelByAppName(appName);
+    }
+
+    public List<TemplateSqlDO> selectTemplateSqlByAppName(String appName) {
+        TemplateSqlDOExample templateSqlDOExample = new TemplateSqlDOExample();
+        templateSqlDOExample.createCriteria().andAppNameEqualTo(appName);
+        return templateSqlDOMapperExt.selectByExample(templateSqlDOExample);
+    }
+
 
 }

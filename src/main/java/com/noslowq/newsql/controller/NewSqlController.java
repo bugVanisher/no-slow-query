@@ -11,7 +11,6 @@ import com.noslowq.newsql.utils.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,22 +22,11 @@ public class NewSqlController extends BaseController {
     @Autowired
     private SqlService sqlService;
 
-    @PostMapping("/api/search")
-    public AjaxResponseBody<List<TemplateSqlDO>> search(@RequestBody SearchCriteria search) {
-        List<TemplateSqlDO> templateSqlDOList = sqlService.search(search);
-        AjaxResponseBody<List<TemplateSqlDO>> result = new AjaxResponseBody<>(templateSqlDOList);
-        result.setCode(StatusCode.SUCCESS.getCode());
-        result.setMessage(StatusCode.SUCCESS.getDesc());
-        result.setSuccess(true);
-        return result;
-    }
-
     @GetMapping("/api/getTablesByAppId")
     public AjaxResponseBody<List<String>> getTableNames(@RequestParam(name = "appId") Long appId) {
         AppInfoDO appInfoDO = sqlService.getAppInfoById(appId);
         if (null == appInfoDO) {
-            appInfoDO.getAppName();
-            return new AjaxResponseBody<>(null);
+            return new AjaxResponseBody<List<String>>().dataNotExist();
         }
         List<String> tableNames = sqlService.getTableNamesByAppName(appInfoDO.getAppName());
         AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(tableNames);
@@ -47,11 +35,30 @@ public class NewSqlController extends BaseController {
         return result;
     }
 
-    @GetMapping("/api/getLabels")
-    public AjaxResponseBody<List<String>> selectLabels(@RequestParam(name = "appName") String appName) {
-//        List<String> envs = sqlService.getEnvsByAppName(appName);
-        AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(Collections.emptyList());
+
+    @GetMapping("/api/getLabelsByAppId")
+    public AjaxResponseBody<List<String>> getLabels(@RequestParam(name = "appId") Long appId) {
+        AppInfoDO appInfoDO = sqlService.getAppInfoById(appId);
+        if (null == appInfoDO) {
+            return new AjaxResponseBody<List<String>>().dataNotExist();
+        }
+        List<String> labels = sqlService.getLabelsByAppName(appInfoDO.getAppName());
+        AjaxResponseBody<List<String>> result = new AjaxResponseBody<>(labels);
         result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @PostMapping("/api/getNewsqlByAppId")
+    public AjaxResponseBody<List<TemplateSqlDO>> search(@RequestBody SearchCriteria search) {
+        AppInfoDO appInfoDO = sqlService.getAppInfoById(search.getAppId());
+        if (null == appInfoDO) {
+            return new AjaxResponseBody<List<TemplateSqlDO>>().dataNotExist();
+        }
+        List<TemplateSqlDO> templateSqlDOList = sqlService.search(appInfoDO.getAppName(), search);
+        AjaxResponseBody<List<TemplateSqlDO>> result = new AjaxResponseBody<>(templateSqlDOList);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
         return result;
     }
 

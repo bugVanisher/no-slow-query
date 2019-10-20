@@ -6,4 +6,6 @@ public interface TemplateSqlDOMapperExt extends TemplateSqlDOMapper {
 
     List<String> selectDistinctTableNameByAppName(String appName);
 
+    List<String> selectDistinctLabelByAppName(String appName);
+
 }
