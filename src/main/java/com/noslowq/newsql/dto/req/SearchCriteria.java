@@ -5,7 +5,7 @@ package com.noslowq.newsql.dto.req;
  */
 public class SearchCriteria {
 
-    private String appName;
+    private Long appId;
 
     private String tablename;
 
@@ -29,12 +29,12 @@ public class SearchCriteria {
         this.isAll = all;
     }
 
-    public String getAppName() {
-        return appName;
+    public Long getAppId() {
+        return appId;
     }
 
-    public void setAppName(String appName) {
-        this.appName = appName;
+    public void setAppId(Long appId) {
+        this.appId = appId;
     }
 
     public String getTablename() {

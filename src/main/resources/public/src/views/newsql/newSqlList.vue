@@ -33,7 +33,12 @@
               clearable
               placeholder="请选择标识符"
             >
-              <el-option />
+              <el-option
+                v-for="(item, index) in sform.labels"
+                :value="item"
+                :label="item"
+                :key="index"
+              />
             </el-select>
           </el-form-item>
           <el-date-picker
@@ -77,8 +82,8 @@
             width="150px"
           />
           <el-table-column
-            prop="newSql"
-            label="sql"
+            prop="templateSql"
+            label="TemplateSql"
             width="450px"
           />
           <el-table-column
@@ -89,12 +94,12 @@
           > >
           </el-table-column>
           <el-table-column
-            prop="status"
+            prop="handleStatus"
             label="状态"
             width="100px"
           >
             <template slot-scope="scope">
-              <el-tag :type="convertStatusCss(scope.row.status)">{{ convertStatusText(scope.row.status) }}</el-tag>
+              <el-tag :type="convertStatusCss(scope.row.handleStatus)">{{ convertStatusText(scope.row.handleStatus) }}</el-tag>
             </template>
           </el-table-column>
           <el-table-column
@@ -203,7 +208,7 @@ export default {
           getLablesByAppId({ appId: appId }).then(info => {
             this.sform.labels = info.data || []
           })
-          getNewsqlByAppId(this.appName, this.sform.tablename, '', 1, 200, 0, 0).then(info => {
+          getNewsqlByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': '', 'page': 1, 'size': 200, 'sctime': 1570362379, 'ectime': 0 }).then(info => {
             if (info.success) {
               this.items = info.data || []
               this.loading = false
@@ -217,7 +222,7 @@ export default {
       var et = new Date(this.ectime)
       var sctime = st.getTime() / 1000
       var ectime = et.getTime() / 1000
-      this.$api.getSearchData(this.appName, this.sform.tablename, this.sform.label, this.pagination.currentPage, 500, sctime, ectime).then(info => {
+      getNewsqlByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': 1, 'size': 200, 'sctime': sctime, 'ectime': ectime }).then(info => {
         if (info.success) {
           this.items = info.data || []
           this.loading = false
@@ -252,7 +257,7 @@ export default {
       this.action = action
     },
     dateForMatter(row, column, value) {
-      return this.$dateFormat(new Date(value * 1000), 'yyyy-MM-dd hh:mm:ss')
+      return this.$helpers.parseTime(value)
     },
     convertStatusText(status) {
       const map = {

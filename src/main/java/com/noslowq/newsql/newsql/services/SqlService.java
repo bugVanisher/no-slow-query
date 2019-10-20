@@ -58,12 +58,12 @@ public class SqlService {
         return SqlParseUtil.getUpCaseParameterizedSQL(sql);
     }
 
-    public List<TemplateSqlDO> search(SearchCriteria searchCriteria) {
+    public List<TemplateSqlDO> search(String appName, SearchCriteria searchCriteria) {
         TemplateSqlDOExample templateSqlDOExample = new TemplateSqlDOExample();
         TemplateSqlDOExample.Criteria cri = templateSqlDOExample.createCriteria();
 
-        if (!StringUtil.isEmpty(searchCriteria.getAppName())) {
-            cri.andAppNameEqualTo(searchCriteria.getAppName());
+        if (!StringUtil.isEmpty(appName)) {
+            cri.andAppNameEqualTo(appName);
         }
         if (!StringUtil.isEmpty(searchCriteria.getTablename())) {
             cri.andTablenameEqualTo(searchCriteria.getTablename());
@@ -101,6 +101,10 @@ public class SqlService {
 
     public List<String> getTableNamesByAppName(String appName) {
         return templateSqlDao.selectDistinctTableNames(appName);
+    }
+
+    public List<String> getLabelsByAppName(String appName) {
+        return templateSqlDao.selectDistinctLabels(appName);
     }
 
     public AppInfoDO getAppInfoById(Long appId) {
