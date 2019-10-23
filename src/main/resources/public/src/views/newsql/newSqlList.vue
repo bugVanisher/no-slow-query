@@ -83,7 +83,7 @@
           />
           <el-table-column
             prop="templateSql"
-            label="TemplateSql"
+            label="模板化SQL"
             width="450px"
           />
           <el-table-column

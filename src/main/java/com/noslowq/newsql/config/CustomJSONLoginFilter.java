@@ -5,8 +5,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.noslowq.newsql.user.dto.UserDetail;
 import com.noslowq.newsql.user.persistence.ddl.UserDO;
 import com.noslowq.newsql.user.services.UserService;
+import com.noslowq.newsql.utils.AlgorithmUtil;
 import com.noslowq.newsql.utils.Logger;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -34,6 +36,9 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
     private static final Logger log = Logger.getLogger(CustomJSONLoginFilter.class);
 
     private final UserService userService;
+
+    @Autowired
+    private AlgorithmUtil algorithmUtil;
 
     CustomJSONLoginFilter(String defaultFilterProcessesUrl, UserService userService) {
         super(new AntPathRequestMatcher(defaultFilterProcessesUrl, HttpMethod.POST.name()));
@@ -84,7 +89,7 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
         if (userDO == null){
             throw new UsernameNotFoundException("user not exist");
         }
-        if(!userDO.getPassword().equals(password)){
+        if(!userDO.getPassword().equals(algorithmUtil.AESdecrypt(userDO.getPassword()))){
             throw new AuthenticationServiceException("error username or password");
         }
         UserDetail userDetail = new UserDetail();
