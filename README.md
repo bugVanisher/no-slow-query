@@ -1,7 +1,7 @@
 # 系统介绍
 NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自动做分析和通知的系统，由 [客户端](https://github.com/bugVanisher/newsql-agent) 和 [服务端](https://github.com/bugVanisher/no-slow-query) 组成。
 
-（系统开发的动因可以查看 [这里](https://bugvanisher.github.io/2019/02/09/why-we-need-sql-analyse/)）
+（系统开发的原因和灵感可以查看 [这里](https://bugvanisher.github.io/2019/02/09/why-we-need-sql-analyse/)）
 
 系统架构图如下：
 ![](http://assets.processon.com/chart_image/5b4a1a69e4b07df3b43b1501.png)
