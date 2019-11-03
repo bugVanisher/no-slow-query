@@ -5,10 +5,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.noslowq.newsql.user.dto.UserDetail;
 import com.noslowq.newsql.user.persistence.ddl.UserDO;
 import com.noslowq.newsql.user.services.UserService;
-import com.noslowq.newsql.utils.AlgorithmUtil;
 import com.noslowq.newsql.utils.Logger;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,9 +35,6 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
 
     private final UserService userService;
 
-    @Autowired
-    private AlgorithmUtil algorithmUtil;
-
     CustomJSONLoginFilter(String defaultFilterProcessesUrl, UserService userService) {
         super(new AntPathRequestMatcher(defaultFilterProcessesUrl, HttpMethod.POST.name()));
         this.userService = userService;
@@ -59,7 +54,7 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
     /**
      * 获取请求体
      */
-    private JSONObject getRequestBody(HttpServletRequest request) throws AuthenticationException{
+    private JSONObject getRequestBody(HttpServletRequest request) throws AuthenticationException {
         try {
             StringBuilder stringBuilder = new StringBuilder();
             InputStream inputStream = request.getInputStream();
@@ -86,10 +81,10 @@ public class CustomJSONLoginFilter extends AbstractAuthenticationProcessingFilte
         } catch (Exception e) {
             log.error(e, "get user error");
         }
-        if (userDO == null){
+        if (userDO == null) {
             throw new UsernameNotFoundException("user not exist");
         }
-        if(!userDO.getPassword().equals(algorithmUtil.AESdecrypt(userDO.getPassword()))){
+        if (!userService.getPassword(userDO.getPassword()).equals(password)) {
             throw new AuthenticationServiceException("error username or password");
         }
         UserDetail userDetail = new UserDetail();

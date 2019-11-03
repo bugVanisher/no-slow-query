@@ -10,6 +10,7 @@ import com.noslowq.newsql.newsql.persistence.mapper.NewSqlDOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -39,5 +40,23 @@ public class NewSqlDaoImpl {
         NewSqlDO newSqlDO = new NewSqlDO();
         newSqlDO.setNum(num);
         return newSqlDOMapper.updateByExampleSelective(newSqlDO, example) > 0;
+    }
+
+    public List<Long> selectIdsByUid(Long uid) {
+        NewSqlDOExample example = new NewSqlDOExample();
+        example.createCriteria().andUniqIdEqualTo(uid);
+        List<NewSqlDO> newSqlDOList = newSqlDOMapper.selectByExample(example);
+        if (null != newSqlDOList && newSqlDOList.size() > 0) {
+            List<Long> ids = new ArrayList<>();
+            newSqlDOList.forEach(newSqlDO -> ids.add(newSqlDO.getId()));
+            return ids;
+        }
+        return null;
+    }
+
+    public List<NewSqlDO> getNewSqlByUid(Long uid) {
+        NewSqlDOExample newSqlDOExample = new NewSqlDOExample();
+        newSqlDOExample.createCriteria().andUniqIdEqualTo(uid);
+        return newSqlDOMapper.selectByExample(newSqlDOExample);
     }
 }

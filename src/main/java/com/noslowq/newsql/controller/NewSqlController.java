@@ -4,10 +4,14 @@ package com.noslowq.newsql.controller;
 import com.noslowq.newsql.base.AjaxResponseBody;
 import com.noslowq.newsql.constants.StatusCode;
 import com.noslowq.newsql.dto.req.SearchCriteria;
+import com.noslowq.newsql.dto.resp.SqlTag;
+import com.noslowq.newsql.newsql.persistence.ddl.ExplainDO;
+import com.noslowq.newsql.newsql.persistence.ddl.NewSqlDO;
 import com.noslowq.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.noslowq.newsql.newsql.services.SqlService;
 import com.noslowq.newsql.user.persistence.ddl.AppInfoDO;
 import com.noslowq.newsql.utils.Logger;
+import jdk.net.SocketFlow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +53,43 @@ public class NewSqlController extends BaseController {
         return result;
     }
 
-    @PostMapping("/api/getNewsqlByAppId")
+    @GetMapping("/api/getTemplateSqlDetail")
+    public AjaxResponseBody<TemplateSqlDO> getTemplateSqlDetail(@RequestParam(name = "uid") Long uid) {
+        TemplateSqlDO templateSqlDO = sqlService.getTemplateSql(uid);
+        AjaxResponseBody<TemplateSqlDO> result = new AjaxResponseBody<>(templateSqlDO);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @GetMapping("/api/getSqlLevelsByUid")
+    public AjaxResponseBody<List<SqlTag>> getSqlLevelsById(@RequestParam(name = "uid") Long uid) {
+        List<SqlTag> sqlTags = sqlService.getSqlTagsByUid(uid);
+        AjaxResponseBody<List<SqlTag>> result = new AjaxResponseBody<>(sqlTags);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        result.setSuccess(true);
+        return result;
+    }
+
+    @GetMapping("/api/getNewSqlByUid")
+    public AjaxResponseBody<List<NewSqlDO>> getNewSqlByUid(@RequestParam(name = "uid") Long uid) {
+        List<NewSqlDO> newSqlDOList = sqlService.getNewSqlByUid(uid);
+        AjaxResponseBody<List<NewSqlDO>> result = new AjaxResponseBody<>(newSqlDOList);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @GetMapping("/api/getExplainByUid")
+    public AjaxResponseBody<List<ExplainDO>> getExplainByUid(@RequestParam(name = "uid") Long uid) {
+        List<ExplainDO> explainDOS = sqlService.getExplainsByUid(uid);
+        AjaxResponseBody<List<ExplainDO>> result = new AjaxResponseBody<>(explainDOS);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @PostMapping("/api/getNewsqlListByAppId")
     public AjaxResponseBody<List<TemplateSqlDO>> search(@RequestBody SearchCriteria search) {
         AppInfoDO appInfoDO = sqlService.getAppInfoById(search.getAppId());
         if (null == appInfoDO) {

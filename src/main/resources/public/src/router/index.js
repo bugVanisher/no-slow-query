@@ -64,6 +64,13 @@ export const constantRouterMap = [
         name: 'NewSqlList',
         component: () => import('@/views/newsql/newSqlList'),
         meta: { title: 'NewSqlList', icon: 'table' }
+      },
+      {
+        hidden: true,
+        path: 'sqlDetail',
+        name: 'SqlDetail',
+        component: () => import('@/views/newsql/sqlDetail'),
+        meta: { title: 'SqlDetail', icon: 'table' }
       }
     ]
   },

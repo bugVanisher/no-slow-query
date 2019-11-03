@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getNewsqlByAppId(data) {
+export function getNewsqlListByAppId(data) {
   return request({
-    url: '/newsql/api/getNewsqlByAppId',
+    url: '/newsql/api/getNewsqlListByAppId',
     method: 'post',
     data
   })
@@ -21,5 +21,35 @@ export function getLablesByAppId(params) {
     url: '/newsql/api/getLabelsByAppId',
     method: 'get',
     params
+  })
+}
+
+export function getTemplateSqlDetail(uid) {
+  return request({
+    url: '/newsql/api/getTemplateSqlDetail',
+    method: 'get',
+    params: { 'uid': uid }
+  })
+}
+export function getSqlLevelsByUid(uid) {
+  return request({
+    url: '/newsql/api/getSqlLevelsByUid',
+    method: 'get',
+    params: { 'uid': uid }
+  })
+}
+export function getNewSqlByUid(uid) {
+  return request({
+    url: '/newsql/api/getNewSqlByUid',
+    method: 'get',
+    params: { 'uid': uid }
+  })
+}
+
+export function getExplainByUid(uid) {
+  return request({
+    url: '/newsql/api/getExplainByUid',
+    method: 'get',
+    params: { 'uid': uid }
   })
 }

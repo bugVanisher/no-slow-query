@@ -164,7 +164,7 @@
 </template>
 
 <script>
-import { getNewsqlByAppId, getTablesByAppId, getLablesByAppId } from '@/api/newsql'
+import { getNewsqlListByAppId, getTablesByAppId, getLablesByAppId } from '@/api/newsql'
 export default {
   data() {
     return {
@@ -208,7 +208,7 @@ export default {
           getLablesByAppId({ appId: appId }).then(info => {
             this.sform.labels = info.data || []
           })
-          getNewsqlByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': '', 'page': 1, 'size': 200, 'sctime': 1570362379, 'ectime': 0 }).then(info => {
+          getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': '', 'page': 1, 'size': 200, 'sctime': 1570362379, 'ectime': 0 }).then(info => {
             if (info.success) {
               this.items = info.data || []
               this.loading = false
@@ -222,7 +222,7 @@ export default {
       var et = new Date(this.ectime)
       var sctime = st.getTime() / 1000
       var ectime = et.getTime() / 1000
-      getNewsqlByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': 1, 'size': 200, 'sctime': sctime, 'ectime': ectime }).then(info => {
+      getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': 1, 'size': 200, 'sctime': sctime, 'ectime': ectime }).then(info => {
         if (info.success) {
           this.items = info.data || []
           this.loading = false
@@ -287,10 +287,7 @@ export default {
     },
     info(data) {
       const { href } = this.$router.resolve({
-        name: 'sqlDetail',
-        params: {
-          id: this.$route.params.id
-        },
+        name: 'SqlDetail',
         query: {
           uid: data.id
         }

@@ -7,6 +7,7 @@ import com.noslowq.newsql.metaq.DbInfo;
 import com.noslowq.newsql.metaq.SqlDto;
 import com.noslowq.newsql.newsql.dao.ExplainDaoImpl;
 import com.noslowq.newsql.newsql.persistence.ddl.ExplainDO;
+import com.noslowq.newsql.newsql.persistence.ddl.NewSqlDO;
 import com.noslowq.newsql.utils.DBUtil;
 import com.noslowq.newsql.utils.DateUtil;
 import com.noslowq.newsql.utils.IdGenerator;
@@ -110,4 +111,5 @@ public class ExplainService {
     public List<ExplainDO> getExplainsByIds(List<Long> ids) {
         return explainDao.getExplainsByIds(ids);
     }
+
 }

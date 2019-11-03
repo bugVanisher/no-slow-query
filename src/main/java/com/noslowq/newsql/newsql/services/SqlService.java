@@ -1,12 +1,12 @@
 package com.noslowq.newsql.newsql.services;
 
+import com.noslowq.newsql.constants.ResultLevelsEnum;
 import com.noslowq.newsql.constants.SQLStatusEnum;
 import com.noslowq.newsql.dto.req.SearchCriteria;
+import com.noslowq.newsql.dto.resp.SqlTag;
 import com.noslowq.newsql.newsql.dao.NewSqlDaoImpl;
 import com.noslowq.newsql.newsql.dao.TemplateSqlDaoImpl;
-import com.noslowq.newsql.newsql.persistence.ddl.NewSqlDO;
-import com.noslowq.newsql.newsql.persistence.ddl.TemplateSqlDO;
-import com.noslowq.newsql.newsql.persistence.ddl.TemplateSqlDOExample;
+import com.noslowq.newsql.newsql.persistence.ddl.*;
 import com.noslowq.newsql.user.dao.AppInfoDaoImpl;
 import com.noslowq.newsql.user.persistence.ddl.AppInfoDO;
 import com.noslowq.newsql.utils.AlgorithmUtil;
@@ -17,8 +17,7 @@ import jodd.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /*  Created by heyu on 2019-10-04.
     usage:
@@ -40,6 +39,9 @@ public class SqlService {
 
     @Autowired
     private AppInfoDaoImpl appInfoDao;
+
+    @Autowired
+    private ExplainService explainService;
 
     public TemplateSqlDO getTemplateSqlByAppNameOriginalSql(String appName, String sql) {
         String sqlMd5 = algorithmUtil.getMd5(getParameterizedSql(sql));
@@ -95,7 +97,7 @@ public class SqlService {
 
     }
 
-    public TemplateSqlDO getUniqSqlById(Long id) {
+    public TemplateSqlDO getTemplateSql(Long id) {
         return templateSqlDao.getTemplateSqlById(id);
     }
 
@@ -109,5 +111,49 @@ public class SqlService {
 
     public AppInfoDO getAppInfoById(Long appId) {
         return appInfoDao.getAppInfo(appId);
+    }
+
+    public List<SqlTag> getSqlTagsByUid(Long uid) {
+        List<ExplainDO> explainDOS = getExplainsByUid(uid);
+        if (null == explainDOS) {
+            return null;
+        }
+        Set<Integer> levels = new HashSet<>();
+        explainDOS.forEach(explainDO -> {
+            if (!StringUtil.isEmpty(explainDO.getSlevel())) {
+                String[] singleLevels = explainDO.getSlevel().split(",");
+                for (String le : singleLevels) {
+                    Integer thisLevel = Integer.valueOf(le);
+                    if (levels.contains(thisLevel)) {
+                        continue;
+                    }
+                    levels.add(thisLevel);
+                }
+            }
+        });
+        List<SqlTag> sqlTags = new ArrayList<>();
+        levels.forEach(level -> {
+            SqlTag sqlTag = new SqlTag();
+            ResultLevelsEnum resultLevelsEnum = ResultLevelsEnum.getResultLevelsEnum(level);
+            if (null != resultLevelsEnum) {
+                sqlTag.setCode(level);
+                sqlTag.setName(resultLevelsEnum.getDesc());
+                sqlTag.setType(resultLevelsEnum.getType());
+                sqlTags.add(sqlTag);
+            }
+        });
+        return sqlTags;
+    }
+
+    public List<ExplainDO> getExplainsByUid(Long uid) {
+        List<Long> ids = newSqlDao.selectIdsByUid(uid);
+        if (null == ids || ids.size() == 0) {
+            return Collections.emptyList();
+        }
+        return explainService.getExplainsByIds(ids);
+    }
+
+    public List<NewSqlDO> getNewSqlByUid(Long uid) {
+        return newSqlDao.getNewSqlByUid(uid);
     }
 }
