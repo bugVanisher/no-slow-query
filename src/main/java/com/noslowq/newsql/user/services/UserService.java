@@ -7,6 +7,7 @@ import com.noslowq.newsql.user.dao.UserDoDaoImpl;
 import com.noslowq.newsql.user.persistence.ddl.AppInfoDO;
 import com.noslowq.newsql.user.persistence.ddl.GroupMemberRelationDO;
 import com.noslowq.newsql.user.persistence.ddl.UserDO;
+import com.noslowq.newsql.utils.AlgorithmUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,9 @@ public class UserService {
     @Autowired
     private AppInfoDaoImpl appInfoDao;
 
+    @Autowired
+    private AlgorithmUtil algorithmUtil;
+
     public UserDO getByUsername(String username) {
         return userDoDao.findByUsername(username);
     }
@@ -41,11 +45,15 @@ public class UserService {
         List<GroupMemberRelationDO> groupMemberRelationDOList = groupMemberRelationDODao.getRelationByUid(uid);
         List<Long> groupIds = new ArrayList<>();
         groupMemberRelationDOList.forEach(groupMemberRelationDO -> groupIds.add(groupMemberRelationDO.getGroupId())
-                );
+        );
         return appInfoDao.getAppInfoByGroupIds(groupIds);
     }
 
     public boolean isAppAuth(Long appId) {
         return true;
+    }
+
+    public String getPassword(String pwd) {
+        return algorithmUtil.AESdecrypt(pwd);
     }
 }

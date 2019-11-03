@@ -1,24 +1,18 @@
 package com.noslowq.newsql.utils;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.commons.codec.binary.Base64;
-
 import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 
 /**
  * @author: gannicus at 2018/7/25
  */
-@Component
+@Service
 public class AlgorithmUtil {
 
     private static final Logger logger = Logger.getLogger(AlgorithmUtil.class);
