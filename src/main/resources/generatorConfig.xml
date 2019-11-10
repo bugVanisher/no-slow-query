@@ -47,7 +47,7 @@
         <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
 
         <!--2、插件配置-->
-<!--        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>-->
+        <!--        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"/>-->
         <!-- 配置内置对象序列号接口 -->
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
         <!--配置内置对象tostring方法生成-->
@@ -120,17 +120,8 @@
             14. delimitIdentifiers：参考tableName的解释，注意，默认的delimitIdentifiers是双引号，如果类似MYSQL这样的数据库，使用的是`（反引号，那么还需要设置context的beginningDelimiter和endingDelimiter属性）
             15. delimitAllColumns：设置是否所有生成的SQL中的列名都使用标识符引起来。默认为false，delimitIdentifiers参考context的属性
         -->
-        <table tableName="template_sql" domainObjectName="TemplateSqlDO" enableCountByExample="true"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
-            <columnOverride column="template_sql" jdbcType="VARCHAR"></columnOverride>
-        </table>
-        <table tableName="new_sql_explain" domainObjectName="ExplainDO" enableCountByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="false">
-            <columnOverride column="new_sql" jdbcType="VARCHAR"></columnOverride>
-        </table>
-        <table tableName="new_sql_info" domainObjectName="NewSqlDO" enableCountByExample="true"
-               enableDeleteByExample="false" enableSelectByExample="true" enableUpdateByExample="true">
-            <columnOverride column="new_sql" jdbcType="VARCHAR"></columnOverride>
+
+        <table tableName="operation_record" domainObjectName="OperationRecord" enableSelectByExample="true">
         </table>
 
     </context>

@@ -92,7 +92,7 @@
             label="操作"
             class-name="uae-action-column"
           >
-            <template scope="scope">
+            <template slot-scope="scope">
               <el-button
                 v-if="scope.row.handleStatus == 4"
                 size="small"
@@ -179,7 +179,7 @@
             label="操作"
             class-name="uae-action-column"
           >
-            <template scope="scope">
+            <template slot-scope="scope">
               <el-button
                 size="small"
                 type="primary"
@@ -312,7 +312,7 @@
             v-if="sql"
             label="SQL: "
           >
-            <span>{{ sql.newSql }}</span>
+            <span>{{ sql.templateSql }}</span>
           </el-form-item>
           <el-form-item
             label="问题描述"
@@ -437,6 +437,7 @@
 
 <script>
 import { getTemplateSqlDetail, getSqlLevelsByUid, getNewSqlByUid, getExplainByUid } from '@/api/newsql'
+import { change, handle } from '@/api/operation'
 export default {
   data() {
     return {
@@ -540,16 +541,16 @@ export default {
       })
     },
     change() {
-      this.$api.change(this.sql.id, this.action).then(info => {
+      change({ 'uid': this.sql.id, 'action': this.action }).then(info => {
         if (info.success && info.data) {
           if (this.action === 'mistaken') {
-            this.sql.status = 5
+            this.sql.handleStatus = 5
           }
           if (this.action === 'following') {
-            this.sql.status = 6
+            this.sql.handleStatus = 6
           }
           if (this.action === 'ignored') {
-            this.sql.status = 2
+            this.sql.handleStatus = 2
           }
           this.$notify({
             message: '操作成功',
@@ -566,9 +567,9 @@ export default {
     handle(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.$api.handle(this.sql.id, this.handleForm.desc, this.handleForm.solution).then(info => {
+          handle({ 'uid': this.sql.id, 'problemDesc': this.handleForm.desc, 'solution': this.handleForm.solution }).then(info => {
             if (info.success && info.data) {
-              this.sql.status = 3
+              this.sql.handleStatus = 3
               this.$notify({
                 message: '操作成功',
                 type: 'success'
