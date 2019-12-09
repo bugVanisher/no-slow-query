@@ -1,134 +1,136 @@
 <template>
   <div class="app-container">
     <div class="panel">
-      <div class="panel-title clearfix">
-        SQL详情
-        <el-button
-          type="info"
-          size="small"
-          class="pull-right"
-          style="margin-left: 10px;"
-          @click="updateOperationRecord()"
-        >
-          <i class="icon-slim-pen" /> 操作记录
-        </el-button>
-        <el-button
-          v-if="showReportBtn"
-          type="warning"
-          size="small"
-          class="pull-right"
-          @click="showReportDialog"
-        >
-          <i class="icon-slim-plus" /> 报告问题
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          class="pull-right"
-          style="margin-right: 2px;"
-          @click="showReRunDialog"
-        >
-          <i class="icon-slim-refresh-2" /> 重跑查询
-        </el-button>
-        <el-button
-          type="primary"
-          size="small"
-          @click="showCTableDialog"
-        >
-          <i class="icon-slim-hammer" /> 查表结构
-        </el-button>
+      <el-row>
+        <div class="panel-title clearfix">
+          SQL详情
+          <el-button
+            type="info"
+            size="small"
+            class="pull-right"
+            style="margin-left: 10px;"
+            @click="updateOperationRecord()"
+          >
+            <i class="icon-slim-pen" /> 操作记录
+          </el-button>
+          <el-button
+            v-if="showReportBtn"
+            type="warning"
+            size="small"
+            class="pull-right"
+            @click="showReportDialog"
+          >
+            <i class="icon-slim-plus" /> 报告问题
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            class="pull-right"
+            style="margin-right: 2px;"
+            @click="showReRunDialog"
+          >
+            <i class="icon-slim-refresh-2" /> 重跑查询
+          </el-button>
+          <el-button
+            type="primary"
+            size="small"
+            @click="showCTableDialog"
+          >
+            <i class="icon-slim-hammer" /> 查表结构
+          </el-button>
 
-      </div>
-      <div
-        class="module"
-        style="padding: 0;"
-      >
-        <el-table
-          :data="templateSqls"
-          style="width: 100%"
+        </div>
+        <div
+          class="module"
+          style="padding: 0;"
         >
-          <el-table-column
-            prop="appName"
-            label="应用名"
-          />
-          <el-table-column
-            prop="tablename"
-            label="表名"
-            width="200"
-          />
-          <el-table-column
-            prop="label"
-            label="标签"
-            width="100"
-          />
-          <el-table-column
-            prop="templateSql"
-            label="sql语句"
-            width="450"
-          />
-          <el-table-column
-            prop="sqlType"
-            label="sql语句类型"
+          <el-table
+            :data="templateSqls"
+            style="width: 100%"
           >
-            <template slot-scope="scope">
-              <el-tag :type="convertSqlTypeCss(scope.row.sqlType)">{{ convertSqlType(scope.row.sqlType) }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column
-            :formatter="dateForMatter"
-            prop="ctime"
-            label="生成时间"
-            width="180"
-          />
-          <el-table-column
-            prop="handleStatus"
-            label="状态"
-          >
-            <template slot-scope="scope">
-              <el-tag :type="convertStatusCss(scope.row.handleStatus)">{{ convertStatusText(scope.row.handleStatus) }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="操作"
-            class-name="uae-action-column"
-          >
-            <template slot-scope="scope">
-              <el-button
-                v-if="scope.row.handleStatus == 4"
-                size="small"
-                type="info"
-                @click="showConfirmDialog(scope.row, 'mistaken')"
-              >
-                误报
-              </el-button>
-              <el-button
-                v-if="scope.row.handleStatus == 4 || scope.row.handleStatus == 1 "
-                size="small"
-                type="danger"
-                @click="showConfirmDialog(scope.row, 'following')"
-              >
-                跟进
-              </el-button>
-              <el-button
-                v-if="scope.row.handleStatus == 1 || scope.row.handleStatus == 4"
-                size="small"
-                type="warning"
-                @click="showConfirmDialog(scope.row, 'ignored')"
-              >
-                可忽略
-              </el-button>
-              <el-button
-                v-if="scope.row.handleStatus == 6"
-                size="small"
-                type="primary"
-                @click="showHandleDialog(scope.row)"
-              >
-                已处理
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+            <el-table-column
+              prop="appName"
+              label="应用名"
+            />
+            <el-table-column
+              prop="tablename"
+              label="表名"
+              width="200"
+            />
+            <el-table-column
+              prop="label"
+              label="标签"
+              width="100"
+            />
+            <el-table-column
+              prop="templateSql"
+              label="sql语句"
+              width="450"
+            />
+            <el-table-column
+              prop="sqlType"
+              label="sql语句类型"
+            >
+              <template slot-scope="scope">
+                <el-tag :type="convertSqlTypeCss(scope.row.sqlType)">{{ convertSqlType(scope.row.sqlType) }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              :formatter="dateForMatter"
+              prop="ctime"
+              label="生成时间"
+              width="180"
+            />
+            <el-table-column
+              prop="handleStatus"
+              label="状态"
+            >
+              <template slot-scope="scope">
+                <el-tag :type="convertStatusCss(scope.row.handleStatus)">{{ convertStatusText(scope.row.handleStatus) }}</el-tag>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="操作"
+              class-name="uae-action-column"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  v-if="scope.row.handleStatus == 4"
+                  size="small"
+                  type="info"
+                  @click="showConfirmDialog(scope.row, 'mistaken')"
+                >
+                  误报
+                </el-button>
+                <el-button
+                  v-if="scope.row.handleStatus == 4 || scope.row.handleStatus == 1 "
+                  size="small"
+                  type="danger"
+                  @click="showConfirmDialog(scope.row, 'following')"
+                >
+                  跟进
+                </el-button>
+                <el-button
+                  v-if="scope.row.handleStatus == 1 || scope.row.handleStatus == 4"
+                  size="small"
+                  type="warning"
+                  @click="showConfirmDialog(scope.row, 'ignored')"
+                >
+                  可忽略
+                </el-button>
+                <el-button
+                  v-if="scope.row.handleStatus == 6"
+                  size="small"
+                  type="primary"
+                  @click="showHandleDialog(scope.row)"
+                >
+                  已处理
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-row>
       <el-row>
         <div
           class="panel"
@@ -145,113 +147,115 @@
           </el-tag>
         </div>
       </el-row>
-
-      <div
-        class="panel"
-        style="padding: 0;"
-      >
-        <el-table
-          :data="newsqls"
-          :loading="loading"
-          element-loading-text="慢慢等着吧.."
+      <el-row>
+        <div
+          class="panel"
+          style="padding: 0;"
         >
-          <!-- <el-table-column prop="appName" label="应用名"></el-table-column> -->
-          <el-table-column
-            prop="tablename"
-            label="表名"
-            width="200"
-          />
-          <el-table-column
-            prop="dbName"
-            label="执行数据库"
-            width="150"
-          />
-          <el-table-column
-            prop="newSql"
-            label="sql语句"
-            width="500"
-          />
-          <el-table-column
-            prop="num"
-            label="历史查询次数"
-          />
-          <el-table-column
-            label="操作"
-            class-name="uae-action-column"
+          <el-table
+            :data="newsqls"
+            :loading="loading"
+            element-loading-text="慢慢等着吧.."
           >
-            <template slot-scope="scope">
-              <el-button
-                size="small"
-                type="primary"
-                @click="showTraceDialog(scope.row)"
-              >
-                查看堆栈
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
-
-      <div
-        class="module"
-        style="padding: 0;"
-      >
-        <el-table
-          :data="explains"
-          :loading="loading"
-          element-loading-text="慢慢等着吧.."
+            <!-- <el-table-column prop="appName" label="应用名"></el-table-column> -->
+            <el-table-column
+              prop="tablename"
+              label="表名"
+              width="200"
+            />
+            <el-table-column
+              prop="dbName"
+              label="执行数据库"
+              width="150"
+            />
+            <el-table-column
+              prop="newSql"
+              label="sql语句"
+              width="500"
+            />
+            <el-table-column
+              prop="num"
+              label="历史查询次数"
+            />
+            <el-table-column
+              label="操作"
+              class-name="uae-action-column"
+            >
+              <template slot-scope="scope">
+                <el-button
+                  size="small"
+                  type="primary"
+                  @click="showTraceDialog(scope.row)"
+                >
+                  查看堆栈
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-row>
+      <el-row>
+        <div
+          class="module"
+          style="padding: 0;"
         >
-          <el-table-column
-            prop="selectType"
-            label="selectType"
-            width="120"
-          />
-          <el-table-column
-            prop="tablename"
-            label="tablename"
-            width="200"
-          />
-          <!-- <el-table-column prop="partitions" label="partitions" width="110"></el-table-column> -->
-          <el-table-column
-            prop="type"
-            label="type"
-          />
-          <el-table-column
-            prop="possibleKeys"
-            label="possibleKeys"
-            width="130"
-          />
-          <el-table-column
-            prop="key"
-            label="key"
-          />
-          <el-table-column
-            prop="keyLen"
-            label="keyLen"
-          />
-          <el-table-column
-            prop="ref"
-            label="ref"
-          />
-          <el-table-column
-            prop="rows"
-            label="rows"
-          />
-          <el-table-column
-            prop="filtered"
-            label="filtered"
-          />
-          <el-table-column
-            prop="extra"
-            label="extra"
-          />
-          <el-table-column
-            prop="newSql"
-            label="sql"
-            width="500"
-          />
-        </el-table>
-      </div>
+          <el-table
+            :data="explains"
+            :loading="loading"
+            element-loading-text="慢慢等着吧.."
+          >
+            <el-table-column
+              prop="selectType"
+              label="selectType"
+              width="120"
+            />
+            <el-table-column
+              prop="tablename"
+              label="tablename"
+              width="200"
+            />
+            <!-- <el-table-column prop="partitions" label="partitions" width="110"></el-table-column> -->
+            <el-table-column
+              prop="type"
+              label="type"
+            />
+            <el-table-column
+              prop="possibleKeys"
+              label="possibleKeys"
+              width="130"
+            />
+            <el-table-column
+              prop="key"
+              label="key"
+            />
+            <el-table-column
+              prop="keyLen"
+              label="keyLen"
+            />
+            <el-table-column
+              prop="ref"
+              label="ref"
+            />
+            <el-table-column
+              prop="rows"
+              label="rows"
+            />
+            <el-table-column
+              prop="filtered"
+              label="filtered"
+            />
+            <el-table-column
+              prop="extra"
+              label="extra"
+            />
+            <el-table-column
+              prop="newSql"
+              label="sql"
+              width="500"
+            />
+          </el-table>
+        </div>
+      </el-row>
 
       <el-dialog
         :visible.sync="confirming"
@@ -711,3 +715,31 @@ export default {
 }
 </script>
 
+<style>
+.el-row {
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-dark {
+  background: #99a9bf;
+}
+.bg-purple {
+  background: #d3dce6;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
+.grid-content {
+  border-radius: 4px;
+  min-height: 36px;
+}
+.row-bg {
+  padding: 10px 0;
+  background-color: #f9fafc;
+}
+</style>
