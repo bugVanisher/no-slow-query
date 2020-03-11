@@ -279,7 +279,7 @@
 
       <el-dialog
         v-if="sql"
-        v-model="traceShow"
+        :visible.sync="traceShow"
         title="堆栈信息"
         width="100%"
       >
@@ -350,7 +350,7 @@
       </el-dialog>
 
       <el-dialog
-        v-model="addReportDialog"
+        :visible.sync="addReportDialog"
         title="您正在报告Bug哦！"
       >
         <span>确定要报Bug吗?</span>
@@ -367,7 +367,7 @@
       </el-dialog>
 
       <el-dialog
-        v-model="reRunDialog"
+        :visible.sync="reRunDialog"
         title="重跑查询计划"
       >
         <div>
@@ -385,11 +385,7 @@
               <span>{{ createTable.templateSql }}</span>
             </el-form-item>
             <el-form-item label-width="30px">
-              <ace-editor
-                v-model="createTable.createTableContent"
-                lang="sh"
-                height="600"
-              />
+              <br>
             </el-form-item>
           </el-form>
         </div>
@@ -440,9 +436,12 @@
 </template>
 
 <script>
-import { getTemplateSqlDetail, getSqlLevelsByUid, getNewSqlByUid, getExplainByUid } from '@/api/newsql'
+import { getTemplateSqlDetail, getSqlLevelsByUid, getNewSqlByUid, getExplainByUid, getTrace } from '@/api/newsql'
 import { change, handle, getOpRecord } from '@/api/operation'
 export default {
+  components: {
+    'ace-editor': require('@/components/AceEditor').default
+  },
   data() {
     return {
       templateSqls: [],
@@ -612,9 +611,9 @@ export default {
     },
     showTraceDialog(sql) {
       this.traceShow = true
-      this.$api.getTraceById(sql.id).then(info => {
+      getTrace(sql.id).then(info => {
         if (info.success) {
-          this.trace = info.data || ''
+          this.trace = info.data.trace || ''
           this.sql = sql
         }
       })

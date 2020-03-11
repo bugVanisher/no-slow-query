@@ -52,6 +52,9 @@ public class SqlService {
     private DbInfoService dbInfoService;
 
     @Autowired
+    private SqlSourceService sqlSourceService;
+
+    @Autowired
     private IdGenerator idGenerator;
 
     public TemplateSqlDO getTemplateSqlByAppNameOriginalSql(String appName, String sql) {
@@ -287,5 +290,9 @@ public class SqlService {
 
     public List<OperationRecord> getOpRecordByUid(Long uid) {
         return operationRecordDao.get(uid);
+    }
+
+    public SqlSourceDO getTrace(Long id) {
+        return sqlSourceService.get(id);
     }
 }

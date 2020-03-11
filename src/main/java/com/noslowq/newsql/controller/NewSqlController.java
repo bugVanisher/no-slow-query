@@ -8,10 +8,7 @@ import com.noslowq.newsql.dto.req.Action;
 import com.noslowq.newsql.dto.req.Handle;
 import com.noslowq.newsql.dto.req.SearchCriteria;
 import com.noslowq.newsql.dto.resp.SqlTag;
-import com.noslowq.newsql.newsql.persistence.ddl.ExplainDO;
-import com.noslowq.newsql.newsql.persistence.ddl.NewSqlDO;
-import com.noslowq.newsql.newsql.persistence.ddl.OperationRecord;
-import com.noslowq.newsql.newsql.persistence.ddl.TemplateSqlDO;
+import com.noslowq.newsql.newsql.persistence.ddl.*;
 import com.noslowq.newsql.newsql.services.SqlService;
 import com.noslowq.newsql.user.persistence.ddl.AppInfoDO;
 import com.noslowq.newsql.user.persistence.ddl.UserDO;
@@ -138,9 +135,18 @@ public class NewSqlController extends BaseController {
     }
 
     @GetMapping("/api/getOperationRecord")
-    public AjaxResponseBody<List<OperationRecord>> getOperationRecord(@RequestParam(name="uid") Long uid) {
+    public AjaxResponseBody<List<OperationRecord>> getOperationRecord(@RequestParam(name = "uid") Long uid) {
         List<OperationRecord> operationRecords = sqlService.getOpRecordByUid(uid);
         AjaxResponseBody<List<OperationRecord>> result = new AjaxResponseBody<>(operationRecords);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @GetMapping("/api/getTrace")
+    public AjaxResponseBody<SqlSourceDO> getTrace(@RequestParam(name = "id") Long id) {
+        SqlSourceDO sqlSourceDO = sqlService.getTrace(id);
+        AjaxResponseBody<SqlSourceDO> result = new AjaxResponseBody<>(sqlSourceDO);
         result.setSuccess(true);
         result.setCode(StatusCode.SUCCESS.getCode());
         return result;

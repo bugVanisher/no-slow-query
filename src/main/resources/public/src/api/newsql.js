@@ -53,3 +53,11 @@ export function getExplainByUid(uid) {
     params: { 'uid': uid }
   })
 }
+
+export function getTrace(id) {
+  return request({
+    url: '/newsql/api/getTrace',
+    method: 'get',
+    params: { 'id': id }
+  })
+}

@@ -18,4 +18,8 @@ public class SqlSourceDaoImpl {
     public boolean add(SqlSourceDO sqlSourceEntity) {
         return sqlSourceDOMapper.insert(sqlSourceEntity) > 0;
     }
+
+    public SqlSourceDO get(Long id) {
+        return sqlSourceDOMapper.selectByPrimaryKey(id);
+    }
 }
