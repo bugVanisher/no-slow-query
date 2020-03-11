@@ -15,3 +15,11 @@ export function handle(data) {
     data
   })
 }
+
+export function getOpRecord(uid) {
+  return request({
+    url: '/newsql/api/getOperationRecord',
+    method: 'get',
+    params: { 'uid': uid }
+  })
+}

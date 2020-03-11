@@ -10,6 +10,7 @@ import com.noslowq.newsql.dto.req.SearchCriteria;
 import com.noslowq.newsql.dto.resp.SqlTag;
 import com.noslowq.newsql.newsql.persistence.ddl.ExplainDO;
 import com.noslowq.newsql.newsql.persistence.ddl.NewSqlDO;
+import com.noslowq.newsql.newsql.persistence.ddl.OperationRecord;
 import com.noslowq.newsql.newsql.persistence.ddl.TemplateSqlDO;
 import com.noslowq.newsql.newsql.services.SqlService;
 import com.noslowq.newsql.user.persistence.ddl.AppInfoDO;
@@ -131,6 +132,15 @@ public class NewSqlController extends BaseController {
         }
         boolean res = sqlService.handleSql(handle, userDO.getUsername());
         AjaxResponseBody<Boolean> result = new AjaxResponseBody<>(res);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @GetMapping("/api/getOperationRecord")
+    public AjaxResponseBody<List<OperationRecord>> getOperationRecord(@RequestParam(name="uid") Long uid) {
+        List<OperationRecord> operationRecords = sqlService.getOpRecordByUid(uid);
+        AjaxResponseBody<List<OperationRecord>> result = new AjaxResponseBody<>(operationRecords);
         result.setSuccess(true);
         result.setCode(StatusCode.SUCCESS.getCode());
         return result;

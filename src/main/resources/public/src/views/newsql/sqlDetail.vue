@@ -9,7 +9,7 @@
             size="small"
             class="pull-right"
             style="margin-left: 10px;"
-            @click="updateOperationRecord()"
+            @click="getOperationRecord()"
           >
             <i class="icon-slim-pen" /> 操作记录
           </el-button>
@@ -402,12 +402,12 @@
       >
         <el-table :data="operationRecord">
           <el-table-column
-            prop="sqlstatus"
+            prop="handleStatus"
             label="操作行为"
             width="120px"
           >
             <template slot-scope="scope">
-              {{ convertOperationStatusText(scope.row.sqlstatus) }}
+              {{ convertOperationStatusText(scope.row.handleStatus) }}
             </template>
           </el-table-column>
           <el-table-column
@@ -441,7 +441,7 @@
 
 <script>
 import { getTemplateSqlDetail, getSqlLevelsByUid, getNewSqlByUid, getExplainByUid } from '@/api/newsql'
-import { change, handle } from '@/api/operation'
+import { change, handle, getOpRecord } from '@/api/operation'
 export default {
   data() {
     return {
@@ -535,8 +535,8 @@ export default {
         }
       })
     },
-    updateOperationRecord() {
-      this.$api.showOperationRecord(this.templateSqlId).then(info => {
+    getOperationRecord() {
+      getOpRecord(this.templateSqlId).then(info => {
         if (info.success) {
           this.operationRecord = info.data || []
           this.loading = false

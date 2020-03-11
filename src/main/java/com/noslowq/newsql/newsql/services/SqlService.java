@@ -284,4 +284,8 @@ public class SqlService {
         }
         return false;
     }
+
+    public List<OperationRecord> getOpRecordByUid(Long uid) {
+        return operationRecordDao.get(uid);
+    }
 }
