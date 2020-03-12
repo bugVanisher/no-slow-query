@@ -7,6 +7,7 @@ import com.noslowq.newsql.constants.StatusCode;
 import com.noslowq.newsql.dto.req.Action;
 import com.noslowq.newsql.dto.req.Handle;
 import com.noslowq.newsql.dto.req.SearchCriteria;
+import com.noslowq.newsql.dto.resp.CreateTableInfo;
 import com.noslowq.newsql.dto.resp.SqlTag;
 import com.noslowq.newsql.newsql.persistence.ddl.*;
 import com.noslowq.newsql.newsql.services.SqlService;
@@ -147,6 +148,15 @@ public class NewSqlController extends BaseController {
     public AjaxResponseBody<SqlSourceDO> getTrace(@RequestParam(name = "id") Long id) {
         SqlSourceDO sqlSourceDO = sqlService.getTrace(id);
         AjaxResponseBody<SqlSourceDO> result = new AjaxResponseBody<>(sqlSourceDO);
+        result.setSuccess(true);
+        result.setCode(StatusCode.SUCCESS.getCode());
+        return result;
+    }
+
+    @GetMapping("/api/getCreateTable")
+    public AjaxResponseBody<CreateTableInfo> getCreateTable(@RequestParam(name = "uid") Long uid) {
+        CreateTableInfo createTableInfo = sqlService.getCreateTableById(uid);
+        AjaxResponseBody<CreateTableInfo> result = new AjaxResponseBody<>(createTableInfo);
         result.setSuccess(true);
         result.setCode(StatusCode.SUCCESS.getCode());
         return result;

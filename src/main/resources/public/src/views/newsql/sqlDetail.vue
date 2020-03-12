@@ -32,7 +32,7 @@
             <i class="icon-slim-refresh-2" /> 重跑查询
           </el-button>
           <el-button
-            type="primary"
+            type="success"
             size="small"
             @click="showCTableDialog"
           >
@@ -281,7 +281,7 @@
         v-if="sql"
         :visible.sync="traceShow"
         title="堆栈信息"
-        width="100%"
+        width="80%"
       >
         <el-form
           ref="form"
@@ -295,7 +295,7 @@
             <ace-editor
               v-model="trace"
               lang="sh"
-              height="500"
+              height="300"
             />
           </el-form-item>
         </el-form>
@@ -361,6 +361,7 @@
           <el-button @click="addReportDialog = false">取 消</el-button>
           <el-button
             type="primary"
+            disabled
             @click="reportBug()"
           >确 定</el-button>
         </span>
@@ -376,7 +377,7 @@
       </el-dialog>
 
       <el-dialog
-        v-model="cTableDialog"
+        :visible.sync="cTableDialog"
         title="表结构"
       >
         <div>
@@ -385,7 +386,11 @@
               <span>{{ createTable.templateSql }}</span>
             </el-form-item>
             <el-form-item label-width="30px">
-              <br>
+              <ace-editor
+                v-model="createTable.createTableContent"
+                lang="sh"
+                height="500"
+              />
             </el-form-item>
           </el-form>
         </div>
@@ -394,7 +399,7 @@
       <el-dialog
         :visible.sync="dialogTableVisible"
         title="操作记录"
-        width="100%"
+        width="60%"
       >
         <el-table :data="operationRecord">
           <el-table-column
@@ -436,7 +441,7 @@
 </template>
 
 <script>
-import { getTemplateSqlDetail, getSqlLevelsByUid, getNewSqlByUid, getExplainByUid, getTrace } from '@/api/newsql'
+import { getTemplateSqlDetail, getSqlLevelsByUid, getNewSqlByUid, getExplainByUid, getTrace, getCreateTable } from '@/api/newsql'
 import { change, handle, getOpRecord } from '@/api/operation'
 export default {
   components: {
@@ -620,20 +625,6 @@ export default {
     },
     reportBug() {
       this.addReportDialog = false
-      this.$api.reportBug(this.templateSqlId).then(info => {
-        if (info.success && info.data) {
-          this.$notify({
-            message: '操作成功',
-            type: 'success'
-          })
-          this.showReportBtn = false
-        } else {
-          this.$notify({
-            message: '操作失败',
-            type: 'error'
-          })
-        }
-      })
     },
     dateForMatter(row, column, value) {
       return this.$helpers.parseTime(value)
@@ -704,7 +695,7 @@ export default {
     },
     showCTableDialog() {
       this.cTableDialog = true
-      this.$api.getCreateTable(this.templateSqlId).then(info => {
+      getCreateTable(this.templateSqlId).then(info => {
         if (info.success) {
           this.createTable = info.data || ''
         }

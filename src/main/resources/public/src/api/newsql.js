@@ -61,3 +61,10 @@ export function getTrace(id) {
     params: { 'id': id }
   })
 }
+export function getCreateTable(uid) {
+  return request({
+    url: '/newsql/api/getCreateTable',
+    method: 'get',
+    params: { 'uid': uid }
+  })
+}
