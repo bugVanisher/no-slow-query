@@ -14,7 +14,7 @@ NoSlowQ(no-slow-query)——一个能够轻松发现新增SQL语句，并能自�
 ![](docs/static/login.png)
 
 
-[更多效果展示](https://bugvanisher.github.io/2019/02/17/the-demonstration-of-mbappe/)
+[更多效果展示](https://bugvanisher.github.io/2019/02/17/the-demonstration-of-noslowq/)
 
 # 技术栈
 ## 后端技术栈
