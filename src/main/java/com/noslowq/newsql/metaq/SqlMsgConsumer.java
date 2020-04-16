@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-@RocketMQMessageListener(topic = "${spring.rocketmq.topic}", consumerGroup = "${spring.rocketmq.consumer.group}")
+//@RocketMQMessageListener(topic = "${spring.rocketmq.topic}", consumerGroup = "${spring.rocketmq.consumer.group}")
 public class SqlMsgConsumer implements RocketMQListener<SqlDto> {
 
     private static final Logger logger = Logger.getLogger(SqlMsgConsumer.class);
