@@ -139,6 +139,16 @@
         </el-table>
 
       </div>
+      <div class="block">
+        <el-pagination
+          :current-page="currentPage"
+          :page-sizes="[10, 50, 200, 500]"
+          :page-size="50"
+          :total="total"
+          layout="total, sizes, prev, pager, next, jumper"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"/>
+      </div>
 
       <el-dialog
         :visible.sync="optimizing"
@@ -170,10 +180,6 @@ export default {
     return {
       items: [],
       loading: false,
-      pagination: {
-        currentPage: 1,
-        pageSize: 50
-      },
       optimizing: false,
       updateAppForm: {
         msg: '',
@@ -192,8 +198,11 @@ export default {
         label: ''
       },
       action: 'ignored',
-      sctime: '',
-      ectime: ''
+      sctime: null,
+      ectime: null,
+      currentPage: 1,
+      total: 0,
+      pageSize: 10
     }
   },
   created() {
@@ -208,23 +217,52 @@ export default {
           getLablesByAppId({ appId: appId }).then(info => {
             this.sform.labels = info.data || []
           })
-          getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': '', 'page': 1, 'size': 200, 'sctime': 1570362379, 'ectime': 0 }).then(info => {
-            if (info.success) {
-              this.items = info.data || []
+          getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.label, 'page': this.currentPage, 'size': this.pageSize, 'sctime': this.getSctime(), 'ectime': this.getEctime() }).then(info => {
+            if (info.success && info.data.sqls) {
+              this.items = info.data.sqls || []
+              this.total = info.data.total
               this.loading = false
             }
           })
         }
       })
     },
-    onSubmit() {
+    getSctime() {
       var st = new Date(this.sctime)
+      console.log(st.getTime())
+      return st.getTime() / 1000
+    },
+    getEctime() {
       var et = new Date(this.ectime)
-      var sctime = st.getTime() / 1000
-      var ectime = et.getTime() / 1000
-      getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': 1, 'size': 200, 'sctime': sctime, 'ectime': ectime }).then(info => {
-        if (info.success) {
-          this.items = info.data || []
+      return et.getTime() / 1000
+    },
+    onSubmit() {
+      getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': this.currentPage, 'size': this.pageSize, 'sctime': this.getSctime(), 'ectime': this.getEctime() }).then(info => {
+        if (info.success && info.data.sqls) {
+          this.items = info.data.sqls || []
+          this.currentPage = 1
+          this.total = info.data.total
+          this.loading = false
+        }
+      })
+    },
+    handleSizeChange(pageSize) {
+      this.pageSize = pageSize
+      this.currentPage = 1
+      getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': this.currentPage, 'size': this.pageSize, 'sctime': this.getSctime(), 'ectime': this.getEctime() }).then(info => {
+        if (info.success && info.data.sqls) {
+          this.items = info.data.sqls || []
+          this.total = info.data.total
+          this.loading = false
+        }
+      })
+    },
+    handleCurrentChange(pageNo) {
+      this.currentPage = pageNo
+      getNewsqlListByAppId({ 'appId': this.appId, 'tablename': this.sform.tablename, 'label': this.sform.label, 'page': this.currentPage, 'size': this.pageSize, 'sctime': this.getSctime(), 'ectime': this.getEctime() }).then(info => {
+        if (info.success && info.data.sqls) {
+          this.items = info.data.sqls || []
+          this.total = info.data.total
           this.loading = false
         }
       })
@@ -341,3 +379,8 @@ export default {
   }
 }
 </script>
+<style>
+.el-pagination {
+    text-align: center;
+}
+</style>

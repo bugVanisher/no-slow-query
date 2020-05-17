@@ -15,6 +15,7 @@ import com.noslowq.newsql.newsql.persistence.ddl.*;
 import com.noslowq.newsql.user.dao.AppInfoDaoImpl;
 import com.noslowq.newsql.user.persistence.ddl.AppInfoDO;
 import com.noslowq.newsql.utils.*;
+import jdk.nashorn.internal.ir.ReturnNode;
 import jodd.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,7 +75,7 @@ public class SqlService {
         return SqlParseUtil.getUpCaseParameterizedSQL(sql);
     }
 
-    public List<TemplateSqlDO> search(String appName, SearchCriteria searchCriteria) {
+    public Map<String, Object> search(String appName, SearchCriteria searchCriteria) {
         TemplateSqlDOExample templateSqlDOExample = new TemplateSqlDOExample();
         TemplateSqlDOExample.Criteria cri = templateSqlDOExample.createCriteria();
 
@@ -92,10 +93,10 @@ public class SqlService {
         }
         Integer sctime = searchCriteria.getSctime();
         Integer ectime = searchCriteria.getEctime();
-        if (null == sctime) {
+        if (null == sctime || 0 == sctime) {
             sctime = DateUtil.currentSecond() - 15 * 24 * 3600;
         }
-        if (null == ectime) {
+        if (null == ectime || 0 == ectime) {
             ectime = DateUtil.currentSecond();
         }
         List<Short> shortList = new ArrayList<>();
@@ -107,7 +108,21 @@ public class SqlService {
         cri.andCtimeLessThanOrEqualTo(ectime);
         templateSqlDOExample.setOrderByClause("ctime desc");
         // // TODO: 2019/10/7 分页
-        return templateSqlDao.getByExample(templateSqlDOExample);
+        List<TemplateSqlDO> templateSqlDOList = templateSqlDao.getByExample(templateSqlDOExample);
+        int firstIndex = (searchCriteria.getPage() - 1) * searchCriteria.getSize();
+        int lastIndex = searchCriteria.getPage() * searchCriteria.getSize();
+        Map<String, Object> result = new HashMap<>();
+        if (firstIndex >= templateSqlDOList.size()) {
+            result.put("total", 0);
+            result.put("sqls", Collections.emptyList());
+            return result;
+        }
+        if (!templateSqlDOList.isEmpty() && templateSqlDOList.size() < lastIndex) {
+            lastIndex = templateSqlDOList.size();
+        }
+        result.put("sqls", templateSqlDOList.subList(firstIndex, lastIndex));
+        result.put("total", templateSqlDOList.size());
+        return result;
 
     }
 

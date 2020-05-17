@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/newsql")
@@ -91,13 +92,13 @@ public class NewSqlController extends BaseController {
     }
 
     @PostMapping("/api/getNewsqlListByAppId")
-    public AjaxResponseBody<List<TemplateSqlDO>> search(@RequestBody SearchCriteria search) {
+    public AjaxResponseBody<Map<String, Object>> search(@RequestBody SearchCriteria search) {
         AppInfoDO appInfoDO = sqlService.getAppInfoById(search.getAppId());
         if (null == appInfoDO) {
-            return new AjaxResponseBody<List<TemplateSqlDO>>().dataNotExist();
+            return new AjaxResponseBody<Map<String, Object>>().dataNotExist();
         }
-        List<TemplateSqlDO> templateSqlDOList = sqlService.search(appInfoDO.getAppName(), search);
-        AjaxResponseBody<List<TemplateSqlDO>> result = new AjaxResponseBody<>(templateSqlDOList);
+        Map<String, Object> templateSqlDOList = sqlService.search(appInfoDO.getAppName(), search);
+        AjaxResponseBody<Map<String, Object>> result = new AjaxResponseBody<>(templateSqlDOList);
         result.setSuccess(true);
         result.setCode(StatusCode.SUCCESS.getCode());
         return result;
