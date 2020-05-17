@@ -20,14 +20,12 @@ public class AlgorithmUtilTest extends BaseTest {
     public void AESencrypt() throws Exception {
 
         String encyData = algorithmUtil.AESencrypt("admin");
-        System.out.println(encyData);
-        System.out.println("hello world.");
-
+        assertEquals("LhSxuBZxuu2oeai6TQvlWQ==", encyData);
     }
 
     @Test
     public void AESdecrypt() throws Exception {
 
-        System.out.println(algorithmUtil.AESdecrypt("LhSxuBZxuu2oeai6TQvlWQ=="));
+        assertEquals("admin", algorithmUtil.AESdecrypt("LhSxuBZxuu2oeai6TQvlWQ=="));
     }
 }
